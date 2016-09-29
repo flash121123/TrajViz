@@ -1923,7 +1923,7 @@ for (int i = 0; i< indexStart.size(); i++){
 				Point newPoint = getScreenCoordinates(lon.get(k),lat.get(k));
 				Point newPoint2 = getScreenCoordinates(lon.get(k+1),lat.get(k+1));
     		
-				g.setColor(Color.BLACK);
+				g.setColor(Color.RED);
 				g.drawLine(newPoint.x, newPoint.y, newPoint2.x, newPoint2.y);
 			}
 			//System.out.println(tmp1);
