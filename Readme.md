@@ -1,5 +1,7 @@
+For using the program directly, double click "TrajViz_beta" in \lib
+
 ==============================================
-Build Instruction
+Build Instruction (From Source Code)
 ==============================================
 
 To build the project (In Eclipse)
