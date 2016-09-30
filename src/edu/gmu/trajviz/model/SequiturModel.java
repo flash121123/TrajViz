@@ -431,6 +431,10 @@ public class SequiturModel extends Observable {
 
 
 	private boolean flag=true;
+	public static int minYield;
+	public static int mfthreshold;
+	public static int anomalythreshold;
+	
 	public static ArrayList<ArrayList<Route>> motifs; 
 	private static Logger consoleLogger;
 	  private static Level LOGGING_LEVEL = Level.DEBUG;
@@ -699,9 +703,17 @@ public class SequiturModel extends Observable {
 	  
 	  public synchronized void processData(double minLink, int alphabetSize, int minBlocks, int noiseThreshold)throws IOException{
 		  sortedCounter = 0;
+		  mfthreshold= (int)minLink;
+		  minLink=0.2;
 		  this.minLink = minLink;
+
 		  this.minBlocks = minBlocks;
+		  minYield=minBlocks;
+		  anomalythreshold=noiseThreshold;
+		  
+		  noiseThreshold=2;
 		  this.noiseThreshold = noiseThreshold;
+		  
 		  this.alphabetSize = alphabetSize;
 		  this.allRules = new ArrayList<GrammarRules>();
 		  this.allFilters = new ArrayList<ArrayList<Integer>>();
@@ -775,13 +787,13 @@ public class SequiturModel extends Observable {
 			  
 			  consoleLogger.info("setting up GI with params: ");
 			  sb.append(" algorithm: Sequitur");
-			  sb.append(" MinLink: ").append(minLink);
-			  sb.append(" Alphabet size: ").append(alphabetSize);
+			  sb.append(" Motif Filter Threshold: ").append(mfthreshold);
+			  
+			  sb.append(" Grid size: ").append(alphabetSize);
 			  sb.append(" Minimal Continuous Blocks: ").append(minBlocks);
-			  sb.append(" Noise Cancellation Threshold: ").append(noiseThreshold);
+			  sb.append(" Anomaly Threshold: ").append(noiseThreshold);
+			  
 			  consoleLogger.info(sb.toString());
-			 
-			 
 			  this.log(sb.toString());
 		  }
 		  rawAllIntervals = new ArrayList<RuleInterval>();

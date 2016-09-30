@@ -8,6 +8,7 @@ import core.Word;
 import core.Collections.AWordList;
 import core.agi.AGrammarRuleRecord;
 import core.agi.AGrammarRules;
+import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 
 public class RuleDensityEstimator {
@@ -111,7 +112,7 @@ public class RuleDensityEstimator {
 		 ArrayList<Direction<Integer>> az2=new ArrayList<Direction<Integer>>();
 		ArrayList<Integer> az3=new ArrayList<Integer>();
 		ArrayList<Integer> az4=new ArrayList<Integer>();
-		int Th=2;
+		int Th=SequiturModel.anomalythreshold;
 		for(int i=0;i<dense.size();i++)
 		{
 			

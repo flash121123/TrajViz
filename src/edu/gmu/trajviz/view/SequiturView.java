@@ -329,16 +329,16 @@ public class SequiturView implements Observer, ActionListener{
 
 		    // the sliding window parameter
 		   
-		    minLinkLabel = new JLabel("Minimum Link Threshold:");
+		    minLinkLabel = new JLabel("Motif Filter Threshold:");
 		    minLinkField = new JTextField(String.valueOf(this.controller.getSession().getMinLink()));
 		    
-		    JLabel alphabetSizeLabel = new JLabel("Alphabet size:");
+		    JLabel alphabetSizeLabel = new JLabel("Based Cell Number:");
 		    alphabetSizeField = new JTextField(String.valueOf(this.controller.getSession()
 		        .getAlphabet()));
 		    minBlocksLabel = new JLabel("Minimal Continous Blocks:");
 		    minBlocksField = new JTextField(String.valueOf(this.controller.getSession().getMinBlocks()));
 		    
-		    noiseThresholdLabel = new JLabel("Noise Cancelation Threshold:");
+		    noiseThresholdLabel = new JLabel("Abnormal Threshold:");
 		    noiseThresholdField = new JTextField(String.valueOf(this.controller.getSession().getNoisePointThreshold()));
 
 

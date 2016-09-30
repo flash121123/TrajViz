@@ -1,4 +1,4 @@
-package edu.gmu.trajviz;
+
 
 import edu.gmu.trajviz.controller.SequiturController;
 

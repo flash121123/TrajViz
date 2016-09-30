@@ -114,7 +114,7 @@ public class ItrSeq {
 			}
 			
 			//too short motif for display
-			if(x.getRuleYield()<3)
+			if(x.getRuleYield()<SequiturModel.minYield)
 			{
 				ss.add(x.getRuleName());
 				continue;
@@ -283,7 +283,7 @@ public class ItrSeq {
 		ArrayList<String> rn2 = new ArrayList<String>();
 		
 		
-		Integer L=5;
+		Integer L=SequiturModel.mfthreshold;
 		while(rn2.size()>100 || rn2.size()==0)
 		{
 			L++;
