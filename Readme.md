@@ -1,4 +1,10 @@
-For using the program directly, double click "TrajViz_beta" in \lib
+
+==============================================
+Software Instruction 
+==============================================
+
+For using the software directly, double click "TrajViz_beta.jar"
+
 
 ==============================================
 Build Instruction (From Source Code)
