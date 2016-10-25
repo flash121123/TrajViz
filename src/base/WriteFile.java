@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import core.frame.Interval;
+import edu.gmu.itr.Direction;
 
 public class WriteFile {
 
@@ -63,6 +64,25 @@ public class WriteFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void write(ArrayList<Double> lon, ArrayList<Double> lat, Direction<Integer> x) {
+		// TODO Auto-generated method stub
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(path + "anomaly" + index, "UTF-8");
+			List<Double> t1 = lat.subList(x.start, x.end);
+			List<Double> t2 = lon.subList(x.start, x.end);
+			for (int i = 0; i < t1.size(); i++) {
+				String line = t1.get(i) + "," + t2.get(i)+"\n";
+				writer.write(line);
+			}
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		index++;
 	}
 
 }

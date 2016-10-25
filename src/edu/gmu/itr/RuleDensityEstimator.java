@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import base.WriteFile;
 import core.Word;
 import core.Collections.AWordList;
 import core.agi.AGrammarRuleRecord;
@@ -149,7 +150,11 @@ public class RuleDensityEstimator {
 			}
 			az.add(az2.get(loc));
 		}
-		
+		WriteFile wr=new WriteFile("anomaly");
+		for(Direction<Integer> atmp : az)
+		{
+			wr.write(SequiturModel.lon, SequiturModel.lat, atmp);
+		}
 	}
 
 
