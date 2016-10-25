@@ -27,3 +27,12 @@ To build the project (In Eclipse)
 7. Add all JAR in lib directory. 
 
 8. Run "TrajVizGui" to see whether the program is correct.
+
+
+==============================================
+Motif Output Instruction
+==============================================
+
+The motif will put into "result" folder with files "motif[motif_index]_[instance_index]"
+
+Each file is a 2xD array consists of [longitude,latitude]
