@@ -12,7 +12,6 @@ import java.util.SortedSet;
 import base.GIHelper;
 import base.Interval1D;
 import base.IntervalST;
-import base.WriteFile;
 import core.frame.Interval;
 import core.Word;
 import core.Collections.AWordList;
