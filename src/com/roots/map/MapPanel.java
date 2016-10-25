@@ -1912,6 +1912,8 @@ for (int i = 0; i< indexStart.size(); i++){
 		
 		ArrayList<Direction<Integer>> tmp = RuleDensityEstimator.az;
 		//System.out.println("Printing Anomaly: ");
+		System.out.println("Anomaly Interval: ");
+		System.out.println(tmp);
 		g.setStroke(new BasicStroke(3));
 		for(Direction<Integer> dd : tmp)
 		{

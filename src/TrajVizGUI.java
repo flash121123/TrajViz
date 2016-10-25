@@ -4,6 +4,7 @@ import edu.gmu.trajviz.controller.SequiturController;
 
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.SequiturView;
+import test.TSUtils;
 
 
 /*
@@ -32,7 +33,6 @@ public class TrajVizGUI{
 
 	    // model...
 	    model = new SequiturModel();
-
 	    // controller...
 	    controller = new SequiturController(model);
 

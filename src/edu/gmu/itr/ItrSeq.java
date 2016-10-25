@@ -12,6 +12,8 @@ import java.util.SortedSet;
 import base.GIHelper;
 import base.Interval1D;
 import base.IntervalST;
+import base.WriteFile;
+import core.frame.Interval;
 import core.Word;
 import core.Collections.AWordList;
 import core.agi.AGrammarRuleRecord;
@@ -36,13 +38,14 @@ public class ItrSeq {
 	public static ArrayList<ArrayList<Route>> motif4density=new ArrayList<ArrayList<Route>>();  
 	public RuleDensityEstimator re;
 	public static String[] strtoken;
-	
+	private String datafileName;
 	public static SAXRecords sd_global;
 	
 	//Main Function:
-	public ItrSeq(String str)
+	public ItrSeq(String str,String name)
 	{
 		this.str=str;
+		datafileName=name;
 	}
 	
 	public ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> run(SAXRecords sd) throws Exception
@@ -83,7 +86,7 @@ public class ItrSeq {
 	
 	public static ArrayList<Integer> countFilter=new ArrayList<Integer>();
 	
-	public static ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> toDisplay()
+	public ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> toDisplay()
 	{
 		ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();
 		IntervalST<String> st=new IntervalST<String>();
@@ -301,12 +304,11 @@ public class ItrSeq {
 				continue;
 			
 			r.add(rst.get(tsp));
+			
 			//countFilter.add(count.get(i));
 			rn2.add(tsp);
 		}
 		}
-		
-		
 		
 		rn=new ArrayList<String>();
 		rn.addAll(rn2);

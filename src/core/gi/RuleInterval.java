@@ -1,6 +1,8 @@
 package core.gi;
 
-public class RuleInterval implements Comparable<RuleInterval>, Cloneable {
+import core.frame.Interval;
+
+public class RuleInterval implements Comparable<RuleInterval>, Cloneable, Interval {
 
 	  public int id; // the corresponding rule id
 	  public int startPos; // interval start

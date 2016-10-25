@@ -1,12 +1,25 @@
 package test;
 
+import java.io.BufferedReader;
+import java.math.BigDecimal;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import core.agi.AGrammarRuleRecord;
 import core.agi.AGrammarRules;
 import core.agi.RuleInterval;
+import edu.gmu.trajviz.model.SequiturMessage;
+import edu.gmu.trajviz.util.StackTrace;
 
 /**
  * Implements algorithms for low-level data manipulation.
@@ -54,6 +67,144 @@ public static int count=0;
     super();
   }
 
+  
+	public void loadData(String dataFileName,String limitStr) {
+		
+		int trajCounter=0;
+		ArrayList<Double> latOri=new ArrayList<Double>();
+		ArrayList<Double> lonOri=new ArrayList<Double>();
+		Double latMax,latMin,lonMax,lonMin;
+		
+		
+		if ((null == dataFileName) || dataFileName.isEmpty()) {
+			return;
+		}
+		Path path = Paths.get(dataFileName);
+		if (!Files.exists(path)) {
+			return;
+		}
+		// read the input
+		// init the data array
+		ArrayList<Double> data = new ArrayList<Double>();
+		ArrayList<Double> data1 = new ArrayList<Double>();
+		ArrayList<Integer> status = new ArrayList<Integer>(); // taxi loading status
+		ArrayList<Long> timeAsUnixEpoc = new ArrayList<Long>(); // number of seconds
+		                                                        // since Jan. 1 1970
+		                                                        // midnight GMT, if
+		                                                        // the time is in
+		                                                        // milliseconds, it
+		                                                        // will need to be
+		                                                        // converted to
+		                                                        // seconds,otherwise
+		                                                        // it may over
+		                                                        // Integer's limit.
+		ArrayList<Double> as = new ArrayList<Double>();
+		try {
+			long loadLimit = 0l;
+			if (!(null == limitStr) && !(limitStr.isEmpty())) {
+
+				loadLimit = Long.parseLong(limitStr);
+			}
+
+			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+			String line = null;
+			long lineCounter = 0;
+			int trajectoryCounter = -1001;
+
+			while ((line = reader.readLine()) != null) {
+				String[] lineSplit = line.trim().split("\\s+|,");
+				double value = new BigDecimal(lineSplit[0]).doubleValue();
+
+				double value1 = new BigDecimal(lineSplit[1]).doubleValue();
+				int value2 = Integer.parseInt(lineSplit[2]);
+				long value3 = Long.parseLong(lineSplit[3]);
+				as.add((double) value3);
+
+				/*
+				 * if(value2==1000) breakPoint = status.size();
+				 */
+				// if
+				// (value>=37.7254&&value<=37.8212&&value1>=-122.5432&&value1<=-122.3561)
+				{
+					if ((lineCounter <= 1)
+					    || (Math.abs(value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) <= 180
+					        && (value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) != 0)) {
+
+						if ((value <= 90) && (value >= -90)) {
+							data.add(value);
+
+							data1.add(value1);
+							status.add(value2);
+
+							timeAsUnixEpoc.add(value3);
+						} else {
+							data.add(value1);
+							data1.add(value);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						}
+					} else {
+						data.add((double) trajectoryCounter); // adding dummy point to split
+						                                      // two trajectories
+						data1.add((double) trajectoryCounter);
+						trajectoryCounter--;
+						status.add(-1);
+						timeAsUnixEpoc.add(value3);
+						// following is adding the first point of a new trajectories
+						if ((value <= 90) && (value >= -90)) {
+							data.add(value);
+
+							data1.add(value1);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						} else {
+							data.add(value1);
+							data1.add(value);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						}
+					}
+					lineCounter++;
+				}
+				if ((loadLimit > 0 && (lineCounter >= loadLimit))) {
+					break;
+				}
+			}
+			
+			
+			data.add((double) trajectoryCounter);
+			data1.add((double) trajectoryCounter);
+			 trajCounter = 0 - (trajectoryCounter + 1000);
+			status.add(-1);
+			timeAsUnixEpoc.add(timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1));
+			reader.close();
+		} catch (Exception e) {
+			String stackTrace = StackTrace.toString(e);
+			System.err.println(StackTrace.toString(e));
+		}
+
+		latOri = new ArrayList<Double>();
+		lonOri = new ArrayList<Double>();
+
+		latMax = Double.valueOf(data.get(0));
+		lonMax = Double.valueOf(data1.get(0));
+		latMin = Double.valueOf(data.get(0));
+		lonMin = Double.valueOf(data1.get(0));
+		for (int i = 0; i < data.size(); i++) {
+			double temp_latitude = Double.valueOf(data.get(i));
+			double temp_longitude = Double.valueOf(data1.get(i));
+			// System.out.println("i = "+i+": "+temp_latitude+","+temp_longitude);
+			latOri.add(temp_latitude);
+			lonOri.add(temp_longitude);
+	// test loaded points
+			// System.out.println(this.lat.get(i)+",
+			// "+this.lon.get(i)+","+data.get(i)+", "+data1.get(i));
+		}
+		data = new ArrayList<>();
+		data1 = new ArrayList<>();
+		
+	}
+	
   /**
    * Reads timeseries from a file. Assumes that file has a single double value on every line.
    * Assigned timestamps are the line numbers.
@@ -458,7 +609,17 @@ public static double mean(ArrayList<Double> series) {
           return false;
   }
 	
-
+	public static int DataConvert(long unixSeconds)
+	{
+		Date date = new Date(unixSeconds*1000); // *1000 is to convert seconds to milliseconds
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT-7")); // give a timezone reference for formating (see comment at the bottom
+		String formattedDate = sdf.format(date);
+		String hour=formattedDate.substring(11, 13);
+		System.out.println(formattedDate);
+		return Integer.parseInt(hour);
+	}
+	
 	 public static double distanceEucidean(double[] TS, Integer i, Integer k, Integer length)
 	 {
 		return length;
@@ -1173,14 +1334,14 @@ public static double mean(ArrayList<Double> series) {
 				min = timeseries[i];
 		return min;
 	}
-	public static Object[] subseriesByCopy(ArrayList<Double> series, int start,
+	public static ArrayList<Double> subseriesByCopy(ArrayList<Double> series, int start,
 			int end) {
 		// TODO Auto-generated method stub
 		if ((start > end) || (start < 0) || (end > series.size())) {
 		      throw new IndexOutOfBoundsException("Unable to extract subseries, series length: "
 		          + series.size() + ", start: " + start + ", end: " + String.valueOf(end - start));
 		    }
-		    return series.subList(start, end).toArray();
+		    return (ArrayList<Double>)series.subList(start, end);
 		  }
 	public static boolean isCoveried(RuleInterval x1, RuleInterval x2) {
 		// TODO Auto-generated method stub

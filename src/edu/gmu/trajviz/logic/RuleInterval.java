@@ -1,5 +1,7 @@
 package edu.gmu.trajviz.logic;
 
+import core.frame.Interval;
+
 /**
  * 
  * Helper class implementing an interval used when plotting.
@@ -7,7 +9,7 @@ package edu.gmu.trajviz.logic;
  * @author Manfred Lerner, seninp
  * 
  */
-public class RuleInterval implements Comparable<RuleInterval> {
+public class RuleInterval implements Comparable<RuleInterval>, Interval {
   public int startPos;
   public int endPos;
   public double coverage;
@@ -166,5 +168,29 @@ public class RuleInterval implements Comparable<RuleInterval> {
 		  end = i2.endPos;
 	  return new RuleInterval(start,end);
   }
+
+	@Override
+	public void setStart(int startPos) {
+		// TODO Auto-generated method stub
+		this.startPos=startPos;
+	}
+
+	@Override
+	public int getStart() {
+		// TODO Auto-generated method stub
+		return startPos;
+	}
+
+	@Override
+	public void setEnd(int endPos) {
+		// TODO Auto-generated method stub
+		this.endPos=endPos;
+	}
+
+	@Override
+	public int getEnd() {
+		// TODO Auto-generated method stub
+		return this.endPos;
+	}
 
 }
