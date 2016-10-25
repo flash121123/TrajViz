@@ -33,6 +33,7 @@ public class TrajVizGUI{
 
 	    // model...
 	    model = new SequiturModel();
+	    
 	    // controller...
 	    controller = new SequiturController(model);
 

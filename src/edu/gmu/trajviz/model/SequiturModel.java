@@ -4,7 +4,8 @@ package edu.gmu.trajviz.model;
  * Author: Qingzhe Li
  */
 import java.io.BufferedReader;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -42,7 +43,7 @@ public class SequiturModel extends Observable {
 	// public final static double (minLink*2) = 0.0;
 	public final static int EVAL_RESOLUTION = 100;
 	private ArrayList<Integer> ruleMapLength;
-
+	public String pems_station="./data/station.txt";
 	// new added global variable for new rules
 	private ArrayList<ArrayList<RuleInterval>> newRules;
 
@@ -57,6 +58,7 @@ public class SequiturModel extends Observable {
 		                                                                              // is
 		                                                                              // always
 		                                                                              // 1.
+		readStations();
 		clusters = new ArrayList<HashSet<Integer>>();
 		filter = new ArrayList<Integer>();
 		clusterMap = new HashMap<Integer, Integer>();
@@ -70,6 +72,7 @@ public class SequiturModel extends Observable {
 			consoleLogger.trace("String: " + saxFrequencyData.getSAXString(SPACE));
 			// System.out.println("String: "+ saxFrequencyData.getSAXString(SPACE));
 			consoleLogger.debug("running sequitur...");
+			
 			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "),this.dataFileName);
 			ss.setAlt(lat);
 			tmprule = ss.run(saxFrequencyData);
@@ -829,6 +832,7 @@ public class SequiturModel extends Observable {
 
 				lat.add(latOri.get(i));
 				lon.add(lonOri.get(i));
+	
 				ncLat.add(latOri.get(i));
 				ncLon.add(lonOri.get(i));
 				i++;
@@ -931,6 +935,7 @@ public class SequiturModel extends Observable {
 	private boolean isNoise(Integer id, int i, int noiseThreshold) {
 		if (i < 1)
 			return false;
+		
 		if (id.intValue() < 0) {
 			// System.out.println("id: "+id);
 			return false;
@@ -1066,7 +1071,57 @@ public class SequiturModel extends Observable {
 		return newRules;
 	}
 
+
+  ArrayList<ArrayList<Double>> station_location=new ArrayList<ArrayList<Double>>();
+  
 	public void setNewRules(ArrayList<ArrayList<RuleInterval>> newRules) {
 		this.newRules = newRules;
+	}
+
+	
+	public void readStations() {
+		// TODO Auto-generated method stub
+    BufferedReader br = null;
+    String line = "\n";
+    String cvsSplitBy = "\t";
+    try {
+
+        br = new BufferedReader(new FileReader(this.pems_station));
+        int i=0;
+        while ((line = br.readLine()) != null) {
+        	if(i==0)
+        	{
+        		i++;
+        		continue;
+        	}
+            // use comma as separator
+            String[] station = line.split(cvsSplitBy);
+           ArrayList<Double>loc=new ArrayList<Double>(2);
+           loc.add(Double.parseDouble(station[8]));
+           loc.add(Double.parseDouble(station[9]));
+           
+            System.out.println("Country [code= " + station[4] + " , name=" + station[5] + "]");
+            if(loc.get(0)<latMax && loc.get(0)>latMin)
+            	if(loc.get(1)<lonMax && loc.get(1)>lonMin)
+            	{
+            			station_location.add(loc);
+            	}
+        }
+
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+		
 	}
 }
