@@ -287,6 +287,7 @@ public class ItrSeq {
 		
 		
 		Integer L=SequiturModel.mfthreshold;
+		WriteFile wr=new WriteFile("result");
 		while(rn2.size()>100 || rn2.size()==0)
 		{
 			L++;
@@ -308,6 +309,11 @@ public class ItrSeq {
 			//countFilter.add(count.get(i));
 			rn2.add(tsp);
 		}
+		}
+		
+		for(ArrayList<edu.gmu.trajviz.logic.RuleInterval> x : r)
+		{
+			wr.write(SequiturModel.lon, SequiturModel.lat, x);
 		}
 		
 		rn=new ArrayList<String>();
