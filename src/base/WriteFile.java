@@ -36,7 +36,7 @@ public class WriteFile {
 		path = "../" + name + "/";
 	}
 
-	public void write(ArrayList<Double> lon, ArrayList<Double> alt, ArrayList<edu.gmu.trajviz.logic.RuleInterval> r) {
+	public void write(ArrayList<Double> lon, ArrayList<Double> alt, List<? extends Interval> r) {
 		if(!health)
 			return;
 		int i = 0;

@@ -70,7 +70,7 @@ public class SequiturModel extends Observable {
 			consoleLogger.trace("String: " + saxFrequencyData.getSAXString(SPACE));
 			// System.out.println("String: "+ saxFrequencyData.getSAXString(SPACE));
 			consoleLogger.debug("running sequitur...");
-			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "),this.dataFileName);
+			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "), this.dataFileName);
 			ss.setAlt(lat);
 			tmprule = ss.run(saxFrequencyData);
 			consoleLogger.debug("collecting grammar rules data ...");
@@ -276,7 +276,7 @@ public class SequiturModel extends Observable {
 				int value2 = Integer.parseInt(lineSplit[2]);
 				long value3 = Long.parseLong(lineSplit[3]);
 				as.add((double) value3);
-			//	time.add(TSUtils.DataConvert(value3));
+				// time.add(TSUtils.DataConvert(value3));
 
 				/*
 				 * if(value2==1000) breakPoint = status.size();
@@ -447,56 +447,55 @@ public class SequiturModel extends Observable {
 				long value3 = Long.parseLong(lineSplit[3]);
 				as.add((double) value3);
 				time.add(TSUtils.DataConvert(value3));
-					if ((lineCounter <= 1)
-					    || (Math.abs(value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) <= DEFAULT_TIME_GAP
-					        && (value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) != 0)) {
+				if ((lineCounter <= 1) || (Math.abs(value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) <= DEFAULT_TIME_GAP
+				    && (value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) != 0)) {
 
-						if ((value <= 90) && (value >= -90)) {
-							data.add(value);
-							data1.add(value1);
-							tmp1.add(value);
-							tmp2.add(value1);
-							status.add(value2);
-							timeAsUnixEpoc.add(value3);
-						} else {
-							data.add(value1);
-							data1.add(value);
-							tmp1.add(value);
-							tmp2.add(value1);
-							status.add(value2);
-							timeAsUnixEpoc.add(value3);
-						}
-					} else {
-						data.add((double) trajectoryCounter); // adding dummy point to split
-						                                      // two trajectories
-						data1.add((double) trajectoryCounter);
-						
-						dx.add(tmp1);
-						dx2.add(tmp2);
-						tmp1=new ArrayList<Double>();
-						tmp2=new ArrayList<Double>();
-						
-						trajectoryCounter--;
-						status.add(-1);
-						time.remove(time.size()-1);
-						
-						time=new ArrayList<Integer>();
+					if ((value <= 90) && (value >= -90)) {
+						data.add(value);
+						data1.add(value1);
+						tmp1.add(value);
+						tmp2.add(value1);
+						status.add(value2);
 						timeAsUnixEpoc.add(value3);
-						// following is adding the first point of a new trajectories
-						if ((value <= 90) && (value >= -90)) {
-							data.add(value);
-							data1.add(value1);
-							status.add(value2);
-							timeAsUnixEpoc.add(value3);
-						} else {
-							data.add(value1);
-							data1.add(value);
-							status.add(value2);
-							timeAsUnixEpoc.add(value3);
-						}
+					} else {
+						data.add(value1);
+						data1.add(value);
+						tmp1.add(value);
+						tmp2.add(value1);
+						status.add(value2);
+						timeAsUnixEpoc.add(value3);
 					}
-					lineCounter++;
-				
+				} else {
+					data.add((double) trajectoryCounter); // adding dummy point to split
+					                                      // two trajectories
+					data1.add((double) trajectoryCounter);
+
+					dx.add(tmp1);
+					dx2.add(tmp2);
+					tmp1 = new ArrayList<Double>();
+					tmp2 = new ArrayList<Double>();
+
+					trajectoryCounter--;
+					status.add(-1);
+					time.remove(time.size() - 1);
+
+					time = new ArrayList<Integer>();
+					timeAsUnixEpoc.add(value3);
+					// following is adding the first point of a new trajectories
+					if ((value <= 90) && (value >= -90)) {
+						data.add(value);
+						data1.add(value1);
+						status.add(value2);
+						timeAsUnixEpoc.add(value3);
+					} else {
+						data.add(value1);
+						data1.add(value);
+						status.add(value2);
+						timeAsUnixEpoc.add(value3);
+					}
+				}
+				lineCounter++;
+
 				if ((loadLimit > 0 && (lineCounter >= loadLimit))) {
 					break;
 				}
@@ -832,7 +831,7 @@ public class SequiturModel extends Observable {
 				ncLat.add(latOri.get(i));
 				ncLon.add(lonOri.get(i));
 				i++;
-				
+
 				firstPoint = true;
 
 			} else {
@@ -848,7 +847,7 @@ public class SequiturModel extends Observable {
 					int lonSpan = blocks.lonSpan(lonOri.get(i), lonOri.get(i - 1));
 
 					if (latSpan > 1 || lonSpan > 1) {
-						int skip = Math.max(latSpan, lonSpan);
+						int skip = 4*Math.max(latSpan, lonSpan);
 						double latstep = (latOri.get(i) - latOri.get(i - 1)) / skip;
 						double lonstep = (lonOri.get(i) - lonOri.get(i - 1)) / skip;
 						for (int j = 0; j < skip; j++) {
