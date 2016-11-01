@@ -998,7 +998,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener{
 	    		{
 	    			Location newLocation = new Location(latitudes.get(j), longitudes.get(j));
 	    			denseCount = 1;
-	    			for(int m=0; m<motif.size(); m++){
+	    			for(int m=0; m<motif.size(); m++){ 
 	    				for(int n=0; n<motif.get(m).size();n++){
 	    					if(!(m==k && i==n)){
 	    						Route route2 = new Route();
@@ -1704,11 +1704,11 @@ public class MapPanel extends JPanel implements PropertyChangeListener{
 		{
 			double[] a=pp[i];
 			Point tmp = getScreenCoordinates(a[3],a[2]);
-			if(a[1]<=3)
+			if(a[1]<=1)
 				g.setColor(Color.BLUE);
-			if(a[1]>3 && a[1]<=10)
+			if(a[1]>1 && a[1]<=10)
 				g.setColor(Color.GREEN);
-			if(a[1]>10 && a[1]<15)
+			if(a[1]>10 && a[1]<20)
 				g.setColor(Color.YELLOW);
 			if(a[1]>=15)
 				g.setColor(Color.RED);
@@ -1987,6 +1987,23 @@ for (int i = 0; i< indexStart.size(); i++){
         }
         
         //draw the legend ticks
+      	for(int i=0;i<pp.length;i++)
+    		{
+    			double[] a=pp[i];
+    			Point tmp = getScreenCoordinates(a[3],a[2]);
+    			if(a[1]<=1)
+    				g.setColor(Color.BLUE);
+    			if(a[1]>1 && a[1]<=10)
+    				g.setColor(Color.GREEN);
+    			if(a[1]>10 && a[1]<20)
+    				g.setColor(Color.YELLOW);
+    			if(a[1]>=15)
+    				g.setColor(Color.RED);
+    			
+        		g.drawOval(tmp.x, tmp.y, 3,3);
+        		g.fillOval(tmp.x, tmp.y, 3,3);
+    			
+    		}
         
         String label = "";
         DecimalFormat df = new DecimalFormat("####");

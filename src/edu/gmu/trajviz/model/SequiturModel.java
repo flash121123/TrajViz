@@ -933,8 +933,8 @@ public class SequiturModel extends Observable {
 					int lonSpan = blocks.lonSpan(lonOri.get(i), lonOri.get(i - 1));
 
 					if (latSpan > 1 || lonSpan > 1) {
-					
 						int skip = Math.max(latSpan, lonSpan);
+						
 						double latstep = (latOri.get(i) - latOri.get(i - 1)) / skip;
 						double lonstep = (lonOri.get(i) - lonOri.get(i - 1)) / skip;
 						for (int j = 0; j < skip; j++) {
