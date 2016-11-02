@@ -990,7 +990,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener{
      * 
      */
     public static void createDenseMap(ArrayList<ArrayList<Route>> motif) {
-    	
+    	maxDenseCount=0;
     	Route route = new Route();
 		//Map<String, Integer> map = new HashMap<String, Integer>();
 		//HashSet<String> set = new HashSet<String>();
@@ -1821,7 +1821,7 @@ for (int i = 0; i< indexStart.size(); i++){
     			int actualCount =d;
     			//System.out.println("########: "+maxDenseCount);
     			//int actualCount = 1;
-    			if(d<dmax/100)
+    			if(d<SequiturModel.anomalythreshold)
     			{
     				for(int k=start;k<end;k++)
         			{
@@ -1851,7 +1851,7 @@ for (int i = 0; i< indexStart.size(); i++){
     			int actualCount =d;
     			//System.out.println("########: "+maxDenseCount);
     			//int actualCount = 1;
-    			if(d<dmax/100)
+    			if(d<SequiturModel.anomalythreshold)
     			{
     				continue;	
     			}

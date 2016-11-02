@@ -288,7 +288,7 @@ public class ItrSeq {
 		
 		Integer L=SequiturModel.mfthreshold;
 		WriteFile wr=new WriteFile("result");
-		while(rn2.size()>1000 || rn2.size()==0)
+		while(rn2.size()>100 || rn2.size()==0)
 		{
 			L++;
 			r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();

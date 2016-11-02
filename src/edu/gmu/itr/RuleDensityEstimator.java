@@ -3,6 +3,7 @@ package edu.gmu.itr;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.SortedSet;
 
 import base.WriteFile;
 import core.Word;
@@ -26,7 +27,7 @@ public class RuleDensityEstimator {
 	public AGrammarRules ag;
 	
 	public static ArrayList<Integer> indexStart;
-	public static ArrayList<Integer> dense;
+	public static ArrayList<Integer> dense=new ArrayList<Integer>();
 	public static ArrayList<Integer> indexEnd;
 	public static ArrayList<Integer> sorted;
 	public static ArrayList<Direction<Integer>> az;
@@ -77,33 +78,40 @@ public class RuleDensityEstimator {
 		indexStart=new ArrayList<Integer>(K);
 		dense=new ArrayList<Integer>(K);
 		indexEnd=new ArrayList<Integer>(K);
-		
-		Integer px=0;
-		Integer index=-1;
-		for(Integer x : sd.getAllIndices())
+		ArrayList<String> tmp=new ArrayList<String>();
+		for(String px : p)
 		{
-			index++; //index for call string
-			if(x==0) //Jump the first one
-				continue;
+			tmp.add(px);
+		}
+		Integer px=0;
+		ArrayList<Integer> indices = new ArrayList<Integer>(sd.getAllIndices());
+		for(int index=0; index<indices.size()-1; index++)
+		{
+			indexStart.add(indices.get(index));
+			indexEnd.add(indices.get(index+1));
 			
 			if(Integer.parseInt(p[index])<0) //Jump break point in start/end
+				{
+				dense.add(10000);
 				continue;
+				}
 			
-			if(Integer.parseInt(p[index-1])<0)
+			if(Integer.parseInt(p[index+1])<0)
+			{
+				dense.add(10000);
 				continue;
+			}
 			
-			indexStart.add(px);
-			indexEnd.add(x);
 			
-			Direction<String> direct=new Direction<String>(p[index-1],p[index]); 
+			
+			Direction<String> direct=new Direction<String>(p[index],p[index+1]); 
 			
 			if(dlist.containsKey(direct))
 				dense.add(dlist.get(direct));
 			else
 				dense.add(-1);
-			px=x;
 		}
-		
+		dense.add(dense.get(dense.size()-1));
 		sorted=new ArrayList<Integer>(dense);
 		Collections.sort(sorted);
 
@@ -113,6 +121,7 @@ public class RuleDensityEstimator {
 		 ArrayList<Direction<Integer>> az2=new ArrayList<Direction<Integer>>();
 		ArrayList<Integer> az3=new ArrayList<Integer>();
 		ArrayList<Integer> az4=new ArrayList<Integer>();
+		ArrayList<Integer> tz=new ArrayList<Integer>();
 		int Th=SequiturModel.anomalythreshold;
 		for(int i=0;i<dense.size();i++)
 		{
@@ -129,6 +138,7 @@ public class RuleDensityEstimator {
 				end=i-1;
 				Direction<Integer> d=new Direction<Integer>(indexStart.get(start),indexEnd.get(end));
 				az2.add(d);
+				tz.add(start);
 				az3.add(start-end);
 				az4.add(start-end);
 				flag=false;
@@ -137,17 +147,23 @@ public class RuleDensityEstimator {
 	
 		Collections.sort(az3);
 		int Kmax=5;
-		
 		for(int i=0;i<Kmax;i++)
 		{
-			Integer tmp = az3.get(i);
-			int loc=az4.indexOf(tmp);
+			Integer tmp2 = az3.get(i);
+			int loc=az4.indexOf(tmp2);
 			az4.set(loc, -1);
 			if(az2.get(loc).start-az2.get(loc).end>400)
 			{
 				i--;
 				continue;
 			}
+			for(int k=0;k<-tmp2;k++)
+			{
+				System.out.println(tmp.get(k+loc));
+				
+			}
+			System.out.println("Next");
+			
 			az.add(az2.get(loc));
 		}
 		WriteFile wr=new WriteFile("anomaly");
