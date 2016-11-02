@@ -132,16 +132,7 @@ public class RuleDensityEstimator {
 				flag=true;
 				continue;
 			}
-			if(Integer.parseInt(p[i])<=-1000)
-			{
-				end=i-1;
-				Direction<Integer> d=new Direction<Integer>(indexStart.get(start),indexEnd.get(end));
-				az2.add(d);
-				az3.add(start-end);
-				az4.add(start-end);
-				flag=false;
-				continue;
-			}
+			
 			if(dense.get(i)>=Th && flag==true)
 			{
 				end=i-1;
