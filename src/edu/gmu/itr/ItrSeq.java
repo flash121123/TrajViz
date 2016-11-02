@@ -523,6 +523,9 @@ public static void updateRuleIntervals(AGrammarRules rules,
 		        	endPos = originalLength-1;
 		        else
 		        	endPos = saxWordsIndexes.get(r0Index+expandedRuleLength)-1;
+		        	
+		        	
+		        
 		  
 		      }
 	      

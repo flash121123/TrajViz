@@ -4,8 +4,7 @@ package edu.gmu.trajviz.model;
  * Author: Qingzhe Li
  */
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -43,8 +42,6 @@ public class SequiturModel extends Observable {
 	// public final static double (minLink*2) = 0.0;
 	public final static int EVAL_RESOLUTION = 100;
 	private ArrayList<Integer> ruleMapLength;
-	public String pems_station = "./data/station.txt";
-	public String pems = "./data/d04_text_station_day_2008_05.txt";
 
 	// new added global variable for new rules
 	private ArrayList<ArrayList<RuleInterval>> newRules;
@@ -60,10 +57,6 @@ public class SequiturModel extends Observable {
 		                                                                              // is
 		                                                                              // always
 		                                                                              // 1.
-		readStations();
-		readPemsTraffic();
-		updatepp();
-		
 		clusters = new ArrayList<HashSet<Integer>>();
 		filter = new ArrayList<Integer>();
 		clusterMap = new HashMap<Integer, Integer>();
@@ -77,8 +70,7 @@ public class SequiturModel extends Observable {
 			consoleLogger.trace("String: " + saxFrequencyData.getSAXString(SPACE));
 			// System.out.println("String: "+ saxFrequencyData.getSAXString(SPACE));
 			consoleLogger.debug("running sequitur...");
-
-			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "), this.dataFileName);
+			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "),this.dataFileName);
 			ss.setAlt(lat);
 			tmprule = ss.run(saxFrequencyData);
 			consoleLogger.debug("collecting grammar rules data ...");
@@ -94,81 +86,6 @@ public class SequiturModel extends Observable {
 			e.printStackTrace();
 		}
 
-	}
-
-	private void updatepp() {
-		// TODO Auto-generated method stub
-		double[][] dx=new double[pems_traffic.size()][4];
-		int i=0;
-		for(Integer k : pems_traffic.keySet())
-		{
-			dx[i][0]=k;
-			dx[i][1]=pems_traffic.get(k);
-			dx[i][2]=station_location.get(k).get(0);
-			dx[i][3]=station_location.get(k).get(1);
-					i++;
-		}
-		MapPanel.pp=dx;
-		
-	}
-
-	HashMap<Integer, Integer> pems_traffic;
-
-	private void readPemsTraffic() {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		pems_traffic= new HashMap<Integer, Integer>();
-		for(Integer name : station_location.keySet())
-		{
-			pems_traffic.put(name, 0);
-		}
-		BufferedReader br = null;
-		String line = "\n";
-		String cvsSplitBy = ",";
-		try {
-
-			br = new BufferedReader(new FileReader(this.pems));
-			int i = 0;
-			while ((line = br.readLine()) != null) {
-				if (i == 0) {
-					i++;
-					continue;
-				}
-				// use comma as separator
-				String[] traffic = line.split(cvsSplitBy);
-				
-				if(traffic.length<15)
-					continue;
-				if (traffic[15].isEmpty())
-					continue;
-				if (traffic[1].isEmpty())
-					continue;
-				int key = Integer.parseInt(traffic[1]);
-				if (station_location.containsKey(key)) {
-					double delay = Double.parseDouble(traffic[15]);
-					if(delay>100)
-					{
-						int x=pems_traffic.get(key);
-						x++;
-						pems_traffic.put(key, x);
-					}
-					
-				}
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 	// private static final int DEFAULT_TIME_GAP = 6;//180;
@@ -359,7 +276,7 @@ public class SequiturModel extends Observable {
 				int value2 = Integer.parseInt(lineSplit[2]);
 				long value3 = Long.parseLong(lineSplit[3]);
 				as.add((double) value3);
-				// time.add(TSUtils.DataConvert(value3));
+			//	time.add(TSUtils.DataConvert(value3));
 
 				/*
 				 * if(value2==1000) breakPoint = status.size();
@@ -530,55 +447,56 @@ public class SequiturModel extends Observable {
 				long value3 = Long.parseLong(lineSplit[3]);
 				as.add((double) value3);
 				time.add(TSUtils.DataConvert(value3));
-				if ((lineCounter <= 1) || (Math.abs(value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) <= DEFAULT_TIME_GAP
-				    && (value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) != 0)) {
+					if ((lineCounter <= 1)
+					    || (Math.abs(value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) <= DEFAULT_TIME_GAP
+					        && (value3 - timeAsUnixEpoc.get(timeAsUnixEpoc.size() - 1)) != 0)) {
 
-					if ((value <= 90) && (value >= -90)) {
-						data.add(value);
-						data1.add(value1);
-						tmp1.add(value);
-						tmp2.add(value1);
-						status.add(value2);
-						timeAsUnixEpoc.add(value3);
+						if ((value <= 90) && (value >= -90)) {
+							data.add(value);
+							data1.add(value1);
+							tmp1.add(value);
+							tmp2.add(value1);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						} else {
+							data.add(value1);
+							data1.add(value);
+							tmp1.add(value);
+							tmp2.add(value1);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						}
 					} else {
-						data.add(value1);
-						data1.add(value);
-						tmp1.add(value);
-						tmp2.add(value1);
-						status.add(value2);
+						data.add((double) trajectoryCounter); // adding dummy point to split
+						                                      // two trajectories
+						data1.add((double) trajectoryCounter);
+						
+						dx.add(tmp1);
+						dx2.add(tmp2);
+						tmp1=new ArrayList<Double>();
+						tmp2=new ArrayList<Double>();
+						
+						trajectoryCounter--;
+						status.add(-1);
+						time.remove(time.size()-1);
+						
+						time=new ArrayList<Integer>();
 						timeAsUnixEpoc.add(value3);
+						// following is adding the first point of a new trajectories
+						if ((value <= 90) && (value >= -90)) {
+							data.add(value);
+							data1.add(value1);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						} else {
+							data.add(value1);
+							data1.add(value);
+							status.add(value2);
+							timeAsUnixEpoc.add(value3);
+						}
 					}
-				} else {
-					data.add((double) trajectoryCounter); // adding dummy point to split
-					                                      // two trajectories
-					data1.add((double) trajectoryCounter);
-
-					dx.add(tmp1);
-					dx2.add(tmp2);
-					tmp1 = new ArrayList<Double>();
-					tmp2 = new ArrayList<Double>();
-
-					trajectoryCounter--;
-					status.add(-1);
-					time.remove(time.size() - 1);
-
-					time = new ArrayList<Integer>();
-					timeAsUnixEpoc.add(value3);
-					// following is adding the first point of a new trajectories
-					if ((value <= 90) && (value >= -90)) {
-						data.add(value);
-						data1.add(value1);
-						status.add(value2);
-						timeAsUnixEpoc.add(value3);
-					} else {
-						data.add(value1);
-						data1.add(value);
-						status.add(value2);
-						timeAsUnixEpoc.add(value3);
-					}
-				}
-				lineCounter++;
-
+					lineCounter++;
+				
 				if ((loadLimit > 0 && (lineCounter >= loadLimit))) {
 					break;
 				}
@@ -853,7 +771,6 @@ public class SequiturModel extends Observable {
 				ncLat.set(i, ncLat.get(i - 1));
 				// lon.set(i, lon.get(i-1));
 				ncLon.set(i, ncLon.get(i - 1));
-				
 				id = previousId;
 			}
 
@@ -863,7 +780,6 @@ public class SequiturModel extends Observable {
 				startPoint = i + 1;
 			}
 
-		
 			words.add(id.toString());
 
 			Integer trimedIndex = 0;
@@ -913,11 +829,10 @@ public class SequiturModel extends Observable {
 
 				lat.add(latOri.get(i));
 				lon.add(lonOri.get(i));
-
 				ncLat.add(latOri.get(i));
 				ncLon.add(lonOri.get(i));
 				i++;
-
+				
 				firstPoint = true;
 
 			} else {
@@ -934,7 +849,6 @@ public class SequiturModel extends Observable {
 
 					if (latSpan > 1 || lonSpan > 1) {
 						int skip = Math.max(latSpan, lonSpan);
-						
 						double latstep = (latOri.get(i) - latOri.get(i - 1)) / skip;
 						double lonstep = (lonOri.get(i) - lonOri.get(i - 1)) / skip;
 						for (int j = 0; j < skip; j++) {
@@ -952,6 +866,7 @@ public class SequiturModel extends Observable {
 						i++;
 					} else {
 						lat.add(latOri.get(i));
+
 						lon.add(lonOri.get(i));
 						ncLat.add(latOri.get(i));
 						ncLon.add(lonOri.get(i));
@@ -967,7 +882,6 @@ public class SequiturModel extends Observable {
 	private void drawRawTrajectories() {
 
 		for (int k = 0; k < rawAllIntervals.size(); k++) {
-
 			Route singleRoute = new Route();
 			int startPos = rawAllIntervals.get(k).getStartPos();
 			int endPos = rawAllIntervals.get(k).getEndPos();
@@ -1017,7 +931,6 @@ public class SequiturModel extends Observable {
 	private boolean isNoise(Integer id, int i, int noiseThreshold) {
 		if (i < 1)
 			return false;
-
 		if (id.intValue() < 0) {
 			// System.out.println("id: "+id);
 			return false;
@@ -1153,58 +1066,7 @@ public class SequiturModel extends Observable {
 		return newRules;
 	}
 
-	HashMap<Integer, ArrayList<Double>> station_location = new HashMap<Integer, ArrayList<Double>>();
-
 	public void setNewRules(ArrayList<ArrayList<RuleInterval>> newRules) {
 		this.newRules = newRules;
-	}
-
-	public void readStations() {
-		// TODO Auto-generated method stub
-		BufferedReader br = null;
-		String line = "\n";
-		String cvsSplitBy = "\t";
-		try {
-
-			br = new BufferedReader(new FileReader(this.pems_station));
-			int i = 0;
-			while ((line = br.readLine()) != null) {
-				if (i == 0) {
-					i++;
-					continue;
-				}
-				// use comma as separator
-				String[] station = line.split(cvsSplitBy);
-	
-				if (station[8].isEmpty())
-					continue;
-				if (station[9].isEmpty())
-					continue;
-
-				ArrayList<Double> loc = new ArrayList<Double>(2);
-				loc.add(Double.parseDouble(station[8]));
-				loc.add(Double.parseDouble(station[9]));
-				int stat = Integer.parseInt(station[0]);
-
-				if (loc.get(0) < latMax && loc.get(0) > latMin)
-					if (loc.get(1) < lonMax && loc.get(1) > lonMin) {
-						station_location.put(stat, loc);
-					}
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
 	}
 }
