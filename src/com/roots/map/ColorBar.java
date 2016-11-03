@@ -1,6 +1,7 @@
 package com.roots.map;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 
 public class ColorBar {
 
@@ -8,7 +9,16 @@ public class ColorBar {
 	private int smallest;
 	private int range;
 	private Color[] colors;
+	private int height;
 	 
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	public ColorBar(int smallestCount, int largestCount) {
 		
 		//colors = createGradient(Color.BLUE, Color.RED, 500);
@@ -96,6 +106,21 @@ public ColorBar(int largestCount) {
 		double norm = (use - smallest) * 1.0 / range; // 0 < norm < 1
         int colorIndex = (int) Math.floor(norm * (colors.length - 1));
 		return colors[colorIndex];
+	}
+
+	public String[] getlabels(int numYTicks) {
+		// TODO Auto-generated method stub
+		 DecimalFormat df = new DecimalFormat("####");
+		 String label="";
+		 String[] labels=new String[numYTicks+1];
+		 for (int y = 0; y <= numYTicks; y++)
+     {
+         //g2d.drawLine(26, height - 30 - y * yDist, 30, height - 30 - y * yDist);
+         label = df.format(((y / (double) numYTicks) * (this.largest - 1)) + 1);
+         
+         labels[y]=label;
+     }
+		return labels;
 	}
 	
 }

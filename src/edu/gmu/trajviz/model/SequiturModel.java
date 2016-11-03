@@ -105,8 +105,8 @@ public class SequiturModel extends Observable {
 		for(Integer k : pems_traffic.keySet())
 		{
 			dx[i][0]=k;
-			dx[i][1]=pems_traffic.get(k);
-			flows.add(pems_traffic.get(k));
+			dx[i][1]=pems_traffic.get(k)/30;
+			flows.add(pems_traffic.get(k)/30);
 			dx[i][2]=station_location.get(k).get(0);
 			dx[i][3]=station_location.get(k).get(1);
 					i++;
