@@ -658,7 +658,7 @@ public class SequiturModel extends Observable {
 	// GrammarRules
 
 	private void convert(ArrayList<ArrayList<RuleInterval>> rules) {
-		ruleIntervals = rules;
+		
 		ArrayList<ArrayList<Route>> r = new ArrayList<ArrayList<Route>>(rules.size());
 		for (ArrayList<RuleInterval> x : rules) {
 			ArrayList<Route> tmp = new ArrayList<Route>();
@@ -681,9 +681,11 @@ public class SequiturModel extends Observable {
 		
 		
 		motifs = r;
+		
 		MapPanel.createDenseMap(motifs);
 		for(Direction<Integer> x : RuleDensityEstimator.az)
 		{
+			ArrayList<RuleInterval> ris = new ArrayList<RuleInterval>();
 			ArrayList<Double> m1 = new ArrayList<Double>();
 			ArrayList<Double> m2 = new ArrayList<Double>();
 			ArrayList<Route> tmp = new ArrayList<Route>();
@@ -696,7 +698,10 @@ public class SequiturModel extends Observable {
 			Route ro = new Route(m1, m2);
 		tmp.add(ro);
 		r.add(tmp);
+		ris.add(new RuleInterval(x.start,x.end));
+		rules.add(ris);
 		}
+		ruleIntervals = rules;
 		motifs = r;
 
 	}

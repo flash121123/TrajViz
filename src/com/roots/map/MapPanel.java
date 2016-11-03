@@ -1787,9 +1787,15 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				Point newPoint2 = getScreenCoordinates(longitudes.get(k + 1), latitudes.get(k + 1));
 				Location loc = new Location(latitudes.get(k), longitudes.get(k));
 				Location loc2 = new Location(latitudes.get(k + 1), longitudes.get(k + 1));
-				int actualCount = Math.min(denseMap.get(loc.toString()), denseMap.get(loc2.toString()));
+				int actualCount=-1;
+				if(motifs.get(ruleDetails).size()!=1)
+					actualCount = Math.min(denseMap.get(loc.toString()), denseMap.get(loc2.toString()));
 
-				g.setColor(getColor(Math.min(actualCount, maxDenseCount)));
+				if(actualCount==-1)
+					g.setColor(Color.RED);
+				else
+					g.setColor(getColor(Math.min(actualCount, maxDenseCount)));
+				
 				g.drawLine(newPoint.x, newPoint.y, newPoint2.x, newPoint2.y);
 
 				if (k == 0) {

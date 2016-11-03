@@ -234,9 +234,9 @@ public void valueChanged(ListSelectionEvent arg) {
     System.out.println("rule:::::"+rule);
     this.firePropertyChange(FIRING_PROPERTY, this.selectedSequiturRule, rule);
  //   System.out.println("Original rules:::::"+map.get(Integer.valueOf(rule)));
-    System.out.println("Rule Intervals:::::"+ruleIntervals.get(Integer.valueOf(rule)));
-    System.out.println("Rule String:::::"+rname.get(Integer.valueOf(rule)));
-    System.out.println("Rule Content:"+Integer.valueOf(rule));
+    //System.out.println("Rule Intervals:::::"+ruleIntervals.get(Integer.valueOf(rule)));
+    //System.out.println("Rule String:::::"+rname.get(Integer.valueOf(rule)));
+    //System.out.println("Rule Content:"+Integer.valueOf(rule));
     
     for(RuleInterval xx : ruleIntervals.get(Integer.valueOf(rule)))
     {
@@ -285,6 +285,10 @@ public void setRulesData(MotifChartData chartData, ArrayList<ArrayList<RuleInter
 	for(String ss : s)
 	{
 		this.ruleMapLength.add(ss.split(" ").length);
+	}
+	for(int i=0;i<5;i++)
+	{
+		this.ruleMapLength.add(-1);
 	}
 	sequiturTableModel.update(this.chartData.getGrammarRules(),this.ruleIntervals,this.ruleMapLength);//,this.frequency);
 	  	
