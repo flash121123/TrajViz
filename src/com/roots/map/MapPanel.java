@@ -1823,12 +1823,17 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 
 		// draw the legend ticks
 		for (int i = 0; i < pp.length; i++) {
-			if (pp[i][3] >= minLat && pp[i][3] <= maxLat && pp[i][4] >= minLon && pp[i][4] <= maxLon) {
+			if (pp[i][2] >=minLat && pp[i][2] <= maxLat) {
+				
+				if (pp[i][3] >=minLon && pp[i][3] <= maxLon) {
+					
+				
 				double[] a = pp[i];
 				Point tmp = getScreenCoordinates(a[3], a[2]);
 				g.setColor(flowcolor.getColor((int) a[1]));
-				g.drawOval(tmp.x, tmp.y, 6, 6);
-				g.fillOval(tmp.x, tmp.y, 6, 6);
+				g.drawOval(tmp.x, tmp.y, 3, 3);
+				g.fillOval(tmp.x, tmp.y, 3, 3);
+				}
 			}
 
 		}
