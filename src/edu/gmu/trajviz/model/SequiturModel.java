@@ -27,7 +27,9 @@ import org.slf4j.LoggerFactory;
 import com.roots.map.ColorBar;
 import com.roots.map.MapPanel;
 
+import edu.gmu.itr.Direction;
 import edu.gmu.itr.ItrSeq;
+import edu.gmu.itr.RuleDensityEstimator;
 import edu.gmu.trajviz.gi.GrammarRuleRecord;
 import edu.gmu.trajviz.gi.GrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
@@ -672,11 +674,30 @@ public class SequiturModel extends Observable {
 				m2.add(lon.get(y.endPos));
 				Route ro = new Route(m1, m2);
 				tmp.add(ro);
+		
 			}
 			r.add(tmp);
 		}
+		
+		
 		motifs = r;
 		MapPanel.createDenseMap(motifs);
+		for(Direction<Integer> x : RuleDensityEstimator.az)
+		{
+			ArrayList<Double> m1 = new ArrayList<Double>();
+			ArrayList<Double> m2 = new ArrayList<Double>();
+			ArrayList<Route> tmp = new ArrayList<Route>();
+			for (int i = x.start; i <= x.end - 1; i = i + 2) {
+				m1.add(lat.get(i));
+				m2.add(lon.get(i));
+			}
+			m1.add(lat.get(x.end));
+			m2.add(lon.get(x.end));
+			Route ro = new Route(m1, m2);
+		tmp.add(ro);
+		r.add(tmp);
+		}
+		motifs = r;
 
 	}
 

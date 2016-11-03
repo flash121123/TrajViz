@@ -892,7 +892,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		// Map<String, Integer> map = new HashMap<String, Integer>();
 		// HashSet<String> set = new HashSet<String>();
 		// denseMap = new HashMap<String, Integer>();
-
+		System.out.println("Call Density Estimator...");
 		// ArrayList<ArrayList<Route>> motif = motifs;
 		System.out.println("Motif Count: " + motif.size());
 		denseMap = new HashMap<String, Integer>();
@@ -1507,6 +1507,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 
 		for (int i = 0; i < motifs.size(); i++) {
 			// System.out.println("Motif"+i);
+			if(motifs.get(i).size()==1)
+				continue;
 			for (int j = 0; j < motifs.get(i).size(); j++) {
 				route = motifs.get(i).get(j);
 				ArrayList<Double> latitudes = route.getLats();
@@ -1526,12 +1528,15 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					Point newPoint2 = getScreenCoordinates(longitudes.get(k + 1), latitudes.get(k + 1));
 					Location loc = new Location(latitudes.get(k), longitudes.get(k));
 					Location loc2 = new Location(latitudes.get(k + 1), longitudes.get(k + 1));
-					int actualCount = Math.min(denseMap.get(loc.toString()), denseMap.get(loc2.toString()));
+					int actualCount=0;
+					if(denseMap.containsKey(loc.toString()) && denseMap.containsKey(loc2.toString()) )
+						actualCount = Math.min(denseMap.get(loc.toString()), denseMap.get(loc2.toString()));
 					// System.out.println("########: "+maxDenseCount);
 					// int actualCount = 1;
 					if (actualCount == 0)
 						actualCount = 1;
-					g.setColor(getColor(Math.min(actualCount, maxDenseCount)));
+					else	
+							g.setColor(getColor(Math.min(actualCount, maxDenseCount)));
 
 					g.drawLine(newPoint.x, newPoint.y, newPoint2.x, newPoint2.y);
 				}
@@ -1691,7 +1696,9 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 
 		for (int i = 0; i < motifs.size(); i++) {
 			// System.out.println("Motif"+i);
-			for (int j = 0; j < motifs.get(i).size(); j++) {
+			if(motifs.get(i).size()==1)
+				continue;
+				for (int j = 0; j < motifs.get(i).size(); j++) {
 				route = motifs.get(i).get(j);
 				ArrayList<Double> latitudes = route.getLats();
 				ArrayList<Double> longitudes = route.getLons();
