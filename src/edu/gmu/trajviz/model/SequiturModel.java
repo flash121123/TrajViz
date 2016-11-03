@@ -24,6 +24,7 @@ import java.util.TreeMap;
 
 import org.slf4j.LoggerFactory;
 
+import com.roots.map.ColorBar;
 import com.roots.map.MapPanel;
 
 import edu.gmu.itr.ItrSeq;
@@ -99,15 +100,19 @@ public class SequiturModel extends Observable {
 	private void updatepp() {
 		// TODO Auto-generated method stub
 		double[][] dx=new double[pems_traffic.size()][4];
+		ArrayList<Integer> flows=new ArrayList<Integer>();
 		int i=0;
 		for(Integer k : pems_traffic.keySet())
 		{
 			dx[i][0]=k;
 			dx[i][1]=pems_traffic.get(k);
+			flows.add(pems_traffic.get(k));
 			dx[i][2]=station_location.get(k).get(0);
 			dx[i][3]=station_location.get(k).get(1);
 					i++;
 		}
+		ColorBar tmp=new ColorBar(Collections.min(flows),Collections.max(flows));
+		MapPanel.flowcolor=tmp;
 		MapPanel.pp=dx;
 		
 	}
@@ -139,19 +144,18 @@ public class SequiturModel extends Observable {
 				
 				if(traffic.length<15)
 					continue;
-				if (traffic[15].isEmpty())
+				if (traffic[9].isEmpty())
 					continue;
 				if (traffic[1].isEmpty())
 					continue;
 				int key = Integer.parseInt(traffic[1]);
 				if (station_location.containsKey(key)) {
-					double delay = Double.parseDouble(traffic[15]);
-					if(delay>100)
-					{
+					int flow = Integer.parseInt(traffic[9]);
+					
 						int x=pems_traffic.get(key);
-						x++;
+						x=x+flow;
 						pems_traffic.put(key, x);
-					}
+					
 					
 				}
 			}

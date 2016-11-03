@@ -158,11 +158,12 @@ import edu.gmu.trajviz.view.SequiturRulesPanel;
 public class MapPanel extends JPanel implements PropertyChangeListener{
 
     private static final Logger log = Logger.getLogger(MapPanel.class.getName());
-
+    public static ColorBar flowcolor;
     public static final class TileServer {
         private final String url;
         private final int maxZoom;
         private boolean broken;
+        
 
         private TileServer(String url, int maxZoom) {
             this.url = url;
@@ -1704,15 +1705,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener{
 		{
 			double[] a=pp[i];
 			Point tmp = getScreenCoordinates(a[3],a[2]);
-			if(a[1]<=1)
-				g.setColor(Color.BLUE);
-			if(a[1]>1 && a[1]<=10)
-				g.setColor(Color.GREEN);
-			if(a[1]>10 && a[1]<20)
-				g.setColor(Color.YELLOW);
-			if(a[1]>=15)
-				g.setColor(Color.RED);
-			
+			g.setColor(flowcolor.getColor((int)a[1]));
     		g.drawOval(tmp.x, tmp.y, 6,6);
     		g.fillOval(tmp.x, tmp.y, 6,6);
 			
@@ -1987,21 +1980,13 @@ for (int i = 0; i< indexStart.size(); i++){
         }
         
         //draw the legend ticks
-      	for(int i=0;i<pp.length;i++)
+        for(int i=0;i<pp.length;i++)
     		{
     			double[] a=pp[i];
     			Point tmp = getScreenCoordinates(a[3],a[2]);
-    			if(a[1]<=1)
-    				g.setColor(Color.BLUE);
-    			if(a[1]>1 && a[1]<=10)
-    				g.setColor(Color.GREEN);
-    			if(a[1]>10 && a[1]<20)
-    				g.setColor(Color.YELLOW);
-    			if(a[1]>=15)
-    				g.setColor(Color.RED);
-    			
-        		g.drawOval(tmp.x, tmp.y, 3,3);
-        		g.fillOval(tmp.x, tmp.y, 3,3);
+    			g.setColor(flowcolor.getColor((int)a[1]));
+        		g.drawOval(tmp.x, tmp.y, 6,6);
+        		g.fillOval(tmp.x, tmp.y, 6,6);
     			
     		}
         
