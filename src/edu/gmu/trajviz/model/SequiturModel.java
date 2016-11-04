@@ -4,6 +4,7 @@ package edu.gmu.trajviz.model;
  * Author: Qingzhe Li
  */
 import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -46,8 +47,8 @@ public class SequiturModel extends Observable {
 	// public final static double (minLink*2) = 0.0;
 	public final static int EVAL_RESOLUTION = 100;
 	private ArrayList<Integer> ruleMapLength;
-	public String pems_station = "./data/station.txt";
-	public String pems = "./data/d04_text_station_day_2008_05.txt";
+	public String pems_station = "./station.txt";
+	public String pems = "./station_day_2008-517-610.txt";
 
 	// new added global variable for new rules
 	private ArrayList<ArrayList<RuleInterval>> newRules;
@@ -107,8 +108,8 @@ public class SequiturModel extends Observable {
 		for(Integer k : pems_traffic.keySet())
 		{
 			dx[i][0]=k;
-			dx[i][1]=pems_traffic.get(k)/30;
-			flows.add(pems_traffic.get(k)/30);
+			dx[i][1]=pems_traffic.get(k)/25;
+			flows.add(pems_traffic.get(k)/25);
 			dx[i][2]=station_location.get(k).get(0);
 			dx[i][3]=station_location.get(k).get(1);
 					i++;
@@ -299,9 +300,10 @@ public class SequiturModel extends Observable {
 
 		// action
 		this.setDataFileName(filename);
-
+		
 		// notify the View
 		this.setChanged();
+		
 		notifyObservers(new SequiturMessage(SequiturMessage.DATA_FNAME, this.getDataFileName()));
 
 		// this notification tells GUI which file was selected as the data source
@@ -1200,7 +1202,6 @@ public class SequiturModel extends Observable {
 		String line = "\n";
 		String cvsSplitBy = "\t";
 		try {
-
 			br = new BufferedReader(new FileReader(this.pems_station));
 			int i = 0;
 			while ((line = br.readLine()) != null) {

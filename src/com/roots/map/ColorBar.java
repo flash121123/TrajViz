@@ -126,7 +126,7 @@ public ColorBar(int largestCount) {
 		 for (int y = 0; y <= numYTicks; y++)
      {
          //g2d.drawLine(26, height - 30 - y * yDist, 30, height - 30 - y * yDist);
-         label = df.format(((y / (double) numYTicks) * (this.largest - 1)) + 1);
+         label = df.format(((y / (double) numYTicks) * (this.largest - this.smallest)) + this.smallest);
          
          labels[y]=label;
      }
