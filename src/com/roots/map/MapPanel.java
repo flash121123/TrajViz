@@ -693,6 +693,9 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		} else {// draw on the right map
 			try {
 				paintInternal(g);
+
+				if(SequiturModel.isColorBarPlot)
+				{
 				if (ruleDetails < 0 || ruleDetails > motifs.size()) // Display all
 				                                                    // motifs on left
 				                                                    // side map
@@ -711,7 +714,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					paintMotifHeatMap(g, motifs, ruleDetails);
 
 				}
-
+				}
 			} finally {
 				g.dispose();
 			}
@@ -1388,7 +1391,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		 */
 
 		// draw the legend ticks
-
+		if(SequiturModel.isColorBarPlot)
+		{
 		String label = "";
 		DecimalFormat df = new DecimalFormat("####");
 		// int numYTicks = (height - 60) / 50;
@@ -1423,7 +1427,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		String yAxis2 = "Average Daily Traffic Flow";
 		g2d.drawString(yAxis2, (height / 2) - 4 * yAxis.length(), -(width + 15));
 		g2d.rotate(-Math.PI / 2);
-
+		}
 		// System.out.println(this.getMax(map));
 		// paintPoints(g,route.getLats().get(0),route.getLons().get(0),i,msgStart);
 		// paintPoints(g,
@@ -1602,7 +1606,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			// to get the text to fit nicely, we need to rotate the graphics
 			g2d.rotate(Math.PI / 2);
 			g2d.drawString(label, labelY, -(width - 32));
-			g2d.drawString(labelflow[y], labelY, -(width));
+			if(pp.length!=0)
+				g2d.drawString(labelflow[y], labelY, -(width));
 			g2d.rotate(-Math.PI / 2);
 		}
 
@@ -1732,8 +1737,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 
 		ArrayList<Direction<Integer>> tmp = RuleDensityEstimator.az;
 		// System.out.println("Printing Anomaly: ");
-		System.out.println("Anomaly Interval: ");
-		System.out.println(tmp);
+	
 		g.setStroke(new BasicStroke(3));
 		for (Direction<Integer> dd : tmp) {
 
@@ -1873,7 +1877,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			// to get the text to fit nicely, we need to rotate the graphics
 			g2d.rotate(Math.PI / 2);
 			g2d.drawString(label, labelY, -(width - 32));
-			g2d.drawString(labelflow[y], labelY, -(width));
+			if(pp.length!=0)
+				g2d.drawString(labelflow[y], labelY, -(width));
 			g2d.rotate(-Math.PI / 2);
 		}
 

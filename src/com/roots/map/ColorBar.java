@@ -41,6 +41,16 @@ public ColorBar(int largestCount) {
 		range = largest - smallest;
 	}
 	
+	public ColorBar() {
+	// TODO Auto-generated constructor stub
+		 colors = createMultiGradient(new Color[]{Color.blue, Color.cyan, Color.green, Color.yellow, Color.red}, 500);
+			//transparencies = createTransparencyGradient(0f,0f,1f,500);
+					
+			largest = 500;
+	    smallest = 1;
+			range = largest - smallest;
+}
+
 	private Color[] createMultiGradient(Color[] colors, int numSteps)
   {
 

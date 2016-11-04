@@ -62,11 +62,11 @@ public class SequiturModel extends Observable {
 		chartData = new MotifChartData(this.dataFileName, lat, lon, 1, alphabetSize); // PAA
 		                                                                              // is
 		                                                                              // always
-		                                                                              // 1.
+		station_location.clear();
 		readStations();
 		readPemsTraffic();
 		updatepp();
-		
+		SequiturModel.isColorBarPlot=true;
 		clusters = new ArrayList<HashSet<Integer>>();
 		filter = new ArrayList<Integer>();
 		clusterMap = new HashMap<Integer, Integer>();
@@ -113,7 +113,11 @@ public class SequiturModel extends Observable {
 			dx[i][3]=station_location.get(k).get(1);
 					i++;
 		}
-		ColorBar tmp=new ColorBar(Collections.min(flows),Collections.max(flows));
+		ColorBar tmp;
+		if(flows.isEmpty())
+			tmp=new ColorBar();
+		else
+			tmp=new ColorBar(Collections.min(flows),Collections.max(flows));
 		MapPanel.flowcolor=tmp;
 		MapPanel.pp=dx;
 		
@@ -255,6 +259,7 @@ public class SequiturModel extends Observable {
 	public static ArrayList<ArrayList<Route>> motifs;
 	private static Logger consoleLogger;
 	private static Level LOGGING_LEVEL = Level.DEBUG;
+	public static boolean isColorBarPlot;
 
 	static {
 		consoleLogger = (Logger) LoggerFactory.getLogger(SequiturModel.class);
@@ -317,7 +322,7 @@ public class SequiturModel extends Observable {
 			this.log("unable to load data - no data source select yet");
 			return;
 		}
-
+		SequiturModel.isColorBarPlot=false;
 		Path path = Paths.get(this.dataFileName);
 		if (!Files.exists(path)) {
 			this.log("file" + this.dataFileName + "doesn't exist.");
