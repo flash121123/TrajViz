@@ -3,7 +3,7 @@
 Software Instruction 
 ==============================================
 
-For using the software directly, double click "TrajViz_beta.jar"
+For using the software directly, uncompressed TrajViz_beta.zip, and run TrajViz_beta.jar
 
 
 ==============================================
