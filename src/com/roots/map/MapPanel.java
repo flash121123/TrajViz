@@ -1596,7 +1596,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				numYTicks = use - 1;
 			}
 		}
-		String[] labelflow = flowcolor.getlabels(numYTicks);
+		//String[] labelflow = flowcolor.getlabels(numYTicks);
 		int yDist = (int) ((height - 60) / (double) numYTicks); // distance between
 		                                                        // ticks
 		g2d.setColor(Color.BLACK);
@@ -1607,8 +1607,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			// to get the text to fit nicely, we need to rotate the graphics
 			g2d.rotate(Math.PI / 2);
 			g2d.drawString(label, labelY, -(width - 32));
-			if(pp.length!=0)
-				g2d.drawString(labelflow[y], labelY, -(width));
+			//if(pp.length!=0)
+			//	g2d.drawString(labelflow[y], labelY, -(width));
 			g2d.rotate(-Math.PI / 2);
 		}
 
@@ -1867,7 +1867,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				numYTicks = use - 1;
 			}
 		}
-		String[] labelflow = flowcolor.getlabels(numYTicks);
+		//String[] labelflow = flowcolor.getlabels(numYTicks);
 		int yDist = (int) ((height - 60) / (double) numYTicks); // distance between
 		                                                        // ticks
 		g2d.setColor(Color.BLACK);
@@ -1878,8 +1878,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			// to get the text to fit nicely, we need to rotate the graphics
 			g2d.rotate(Math.PI / 2);
 			g2d.drawString(label, labelY, -(width - 32));
-			if(pp.length!=0)
-				g2d.drawString(labelflow[y], labelY, -(width));
+			//if(pp.length!=0)
+			//	g2d.drawString(labelflow[y], labelY, -(width));
 			g2d.rotate(-Math.PI / 2);
 		}
 

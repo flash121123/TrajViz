@@ -5,6 +5,7 @@ package edu.gmu.trajviz.model;
  */
 import java.io.BufferedReader;
 
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -65,8 +66,8 @@ public class SequiturModel extends Observable {
 		                                                                              // always
 		station_location.clear();
 		//readStations();
-		readPemsTraffic();
-		updatepp();
+		//readPemsTraffic();
+		//updatepp();
 		SequiturModel.isColorBarPlot=true;
 		clusters = new ArrayList<HashSet<Integer>>();
 		filter = new ArrayList<Integer>();
@@ -125,7 +126,7 @@ public class SequiturModel extends Observable {
 	}
 
 	HashMap<Integer, Integer> pems_traffic;
-
+/*
 	private void readPemsTraffic() {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
@@ -181,7 +182,7 @@ public class SequiturModel extends Observable {
 			}
 		}
 	}
-
+*/
 	// private static final int DEFAULT_TIME_GAP = 6;//180;
 	private static final int DEFAULT_TIME_GAP = 180;
 	private boolean[] isCovered;
