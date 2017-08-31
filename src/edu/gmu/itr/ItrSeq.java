@@ -50,12 +50,15 @@ public class ItrSeq {
 	public ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> run(SAXRecords sd) throws Exception
 	{
 		sd_global=sd;
+		long startTime = System.currentTimeMillis();
+		
 		AWordList w=new AWordList(str);
 		ItrSequitur.restart();
 		ItrSequitur.setUniversal_word(w);
+		
 		arules=ItrSequitur.run(w);
 		Integer t=w.get(0).start;
-
+		
 		while (arules.count() != 1) {	 
 			   // System.out.println(arules);
 				w=new AWordList(t,arules); //Converting Rule to WordList
@@ -65,13 +68,16 @@ public class ItrSeq {
 				//System.out.println("Finish Layer: "+arules.getLayer());
 		}
 		//System.out.println(arules.getLayer());
+		long endTime = System.currentTimeMillis()-startTime;
+		System.out.println(endTime);
+		boolean flag=true;
 		
 		updateRuleIntervals(arules, sd, alt.size());
 		strtoken=str.split(" ");
 		re=new RuleDensityEstimator(sd,arules);
 		re.run();
 		ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> x = toDisplay();
-		 
+		
 		return x;
 	}
 
@@ -286,7 +292,7 @@ public class ItrSeq {
 		
 		
 		Integer L=SequiturModel.mfthreshold;
-		while(rn2.size()>100 || rn2.size()==0)
+		while(rn2.size()>200 || rn2.size()==0)
 		{
 			L++;
 			r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();

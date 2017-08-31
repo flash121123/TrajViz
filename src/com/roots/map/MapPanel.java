@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2008, 2012 Stepan Rutz.
+
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1811,8 +1812,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					int xLast = newPoint2.x;
 					int yLast = newPoint2.y;
 					g.setColor(Color.BLACK);
-					g.drawOval(x0 - 1, y0 - 1, 2, 2);
-					g.drawRect(xLast - 1, yLast - 1, 2, 2);
+					g.drawOval(xLast - 1, yLast - 1, 2, 2);
+					g.drawRect(x0- 1, y0 - 1, 2, 2);
 				}
 			}
 		}

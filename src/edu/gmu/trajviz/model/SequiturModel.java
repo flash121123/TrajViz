@@ -64,7 +64,7 @@ public class SequiturModel extends Observable {
 		                                                                              // is
 		                                                                              // always
 		station_location.clear();
-		readStations();
+		//readStations();
 		readPemsTraffic();
 		updatepp();
 		SequiturModel.isColorBarPlot=true;
@@ -971,7 +971,7 @@ public class SequiturModel extends Observable {
 
 					if (latSpan > 1 || lonSpan > 1) {
 					
-						int skip = Math.max(latSpan, lonSpan);
+						int skip = Math.max(latSpan,lonSpan);
 						double latstep = (latOri.get(i) - latOri.get(i - 1)) / skip;
 						double lonstep = (lonOri.get(i) - lonOri.get(i - 1)) / skip;
 						for (int j = 0; j < skip; j++) {

@@ -82,8 +82,8 @@ public class SequiturController extends Observable implements ActionListener {
 	    	  int minBlocks = session.getMinBlocks();
 	    	  int noiseThreshold = session.getNoisePointThreshold();
 	    	  
-	    	  log("PAA Size: " + minLink + ", Alphabet Size: "
-	    	            + alphabetSize + ", Minimal Continous Blocks: " + minBlocks);
+	    	  log("Minimum Frequency: " + minLink + ", Grid Size: "
+	    	            + alphabetSize + ", Minimal Motif Length: " + minBlocks);
 	    	  try {
 	    		  model.processData(minLink,alphabetSize,minBlocks, noiseThreshold);
 	    	  }

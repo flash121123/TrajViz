@@ -10,7 +10,7 @@ import test.TSUtils;
 /*
  * Main runnable of trajViz GUI
  * 
- * @author Qingzhe Li
+ * @author Qingzhe Li, Yifeng Gao
  * 
  */
 public class TrajVizGUI{

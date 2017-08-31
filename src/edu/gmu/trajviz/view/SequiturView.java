@@ -238,13 +238,13 @@ public class SequiturView implements Observer, ActionListener{
 		MigLayout sequiturPaneLayout = new MigLayout(",insets 0 0 0 0", "[fill,grow]", "[fill,grow]");
 		sequiturRulesPane.setLayout(sequiturPaneLayout);
 
-	    tabbedRulesPane.addTab("Grammar rules", null, sequiturRulesPane,"Shows grammar rules");
+	    tabbedRulesPane.addTab("Motif/Anomalies Table", null, sequiturRulesPane,"Shows Motif/Anomalies");
 	    
 	    // now format the tabbed pane
 	    //
 	    tabbedRulesPane.setBorder(BorderFactory.createTitledBorder(
 	        BorderFactory.createEtchedBorder(BevelBorder.LOWERED),
-	        "Grammar Rule Details",
+	        "Motif/Anomalies Detail",
 	        TitledBorder.LEFT, TitledBorder.CENTER, new Font(TITLE_FONT, Font.PLAIN, 10)));
 	}
 
@@ -319,7 +319,7 @@ public class SequiturView implements Observer, ActionListener{
 
 		    parametersPane = new JPanel();
 		    parametersPane.setBorder(BorderFactory.createTitledBorder(
-		        BorderFactory.createEtchedBorder(BevelBorder.LOWERED), "Parameteres",
+		        BorderFactory.createEtchedBorder(BevelBorder.LOWERED), "Parameteres & Motif Filters",
 		        TitledBorder.LEFT, TitledBorder.CENTER, new Font(TITLE_FONT, Font.PLAIN, 10)));
 
 		    // insets: T, L, B, R.
@@ -329,25 +329,26 @@ public class SequiturView implements Observer, ActionListener{
 
 		    // the sliding window parameter
 		   
-		    minLinkLabel = new JLabel("Motif Filter Threshold:");
+		    minLinkLabel = new JLabel("Minimum Frequency:");
 		    minLinkField = new JTextField(String.valueOf(this.controller.getSession().getMinLink()));
 		    
-		    JLabel alphabetSizeLabel = new JLabel("Based Cell Number:");
+		    JLabel alphabetSizeLabel = new JLabel("Grid Cell Size:");
 		    alphabetSizeField = new JTextField(String.valueOf(this.controller.getSession()
 		        .getAlphabet()));
-		    minBlocksLabel = new JLabel("Minimal Continous Blocks:");
+		    
+		    minBlocksLabel = new JLabel("Minumum Motif Length:");
 		    minBlocksField = new JTextField(String.valueOf(this.controller.getSession().getMinBlocks()));
 		    
-		    noiseThresholdLabel = new JLabel("Abnormal Threshold:");
+		    noiseThresholdLabel = new JLabel("Abnormal Frequency:");
 		    noiseThresholdField = new JTextField(String.valueOf(this.controller.getSession().getNoisePointThreshold()));
 
 
-		    parametersPane.add(minLinkLabel);
-		    parametersPane.add(minLinkField);
 		    
 
 		    parametersPane.add(alphabetSizeLabel);
 		    parametersPane.add(alphabetSizeField);
+		    parametersPane.add(minLinkLabel);
+		    parametersPane.add(minLinkField);
 		    parametersPane.add(minBlocksLabel);
 		    parametersPane.add(minBlocksField);
 		    parametersPane.add(noiseThresholdLabel);
