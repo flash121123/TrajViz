@@ -38,6 +38,7 @@ import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
 import edu.gmu.trajviz.logic.*;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import core.gi.RuleInterval;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 import edu.gmu.trajviz.timeseries.TSException;
 import edu.gmu.trajviz.util.StackTrace;

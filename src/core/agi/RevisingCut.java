@@ -1,14 +1,7 @@
 package core.agi;
 
-import java.util.ArrayList;
-
-
-import java.util.HashMap;
-
-import core.IterativeController;
 import core.Word;
 import core.Collections.AWordList;
-import core.gi.GrammarRuleRecord;
 
 public class RevisingCut {
 

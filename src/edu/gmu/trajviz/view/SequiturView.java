@@ -6,6 +6,7 @@ package edu.gmu.trajviz.view;
  */
 
 import java.awt.Desktop;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -59,7 +60,7 @@ import ch.qos.logback.classic.Level;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import edu.gmu.trajviz.logic.RuleInterval;
+import core.gi.RuleInterval;
 import edu.gmu.trajviz.model.SequiturMessage;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.util.StackTrace;

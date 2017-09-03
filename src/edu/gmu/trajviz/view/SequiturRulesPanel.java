@@ -1,6 +1,7 @@
 package edu.gmu.trajviz.view;
 
 import java.beans.PropertyChangeEvent;
+
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,7 +31,7 @@ import ch.qos.logback.classic.Logger;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import edu.gmu.trajviz.logic.RuleInterval;
+import core.gi.RuleInterval;
 import edu.gmu.trajviz.model.SequiturMessage;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.table.SequiturTableColumns;

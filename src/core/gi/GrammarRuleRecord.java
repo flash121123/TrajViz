@@ -2,10 +2,9 @@ package core.gi;
 
 import java.util.ArrayList;
 
-import java.util.Arrays;
 
+import java.util.Arrays;
 import core.Collections.AWordList;
-import core.Collections.WordList;
 import core.agi.AGrammarRuleRecord;
 import core.gi.RuleInterval;
 

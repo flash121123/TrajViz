@@ -164,46 +164,11 @@ public class RulePool {
 	}
 	
 	
-	private void generateCsvFile(String sFileName, HashMap<String, ArrayList<Interval>> h) {
-		try {
-			FileWriter writer = new FileWriter(sFileName);
-			Set<String> s=new HashSet<String>(h.keySet());
-			
-			for (String x : s) {
-				ArrayList<Interval> q = h.get(x);
-				for(Interval l : q)
-				{
-					String ss= l.get_start().toString() + ',' + l.get_end().toString() + '\n';
-					writer.append(ss);
-				}
-			}
-
-			writer.flush();
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public HashMap<String, ArrayList<Interval>> getHM()
 	{
 		return h;
 	}
 	
-	public HashMap<String, ArrayList<Interval>> getLayerRule(Integer layer, String FILE_NAME)
-	{
-		StatInterval si=new StatInterval(h);
-		HashMap<String, ArrayList<Interval>> k=si.ReturnLayerRules(layer);
-		generateCsvFile(FILE_NAME, k); 
-		return k;	
-	}
-	
-	public HashMap<String, ArrayList<Interval>> getLayerRule(Integer layer)
-	{
-		StatInterval si=new StatInterval(h);
-
-		return si.ReturnLayerRules(layer);	
-	}
 	
 	public GrammarRuleRecord get(Integer[] t)
 	{

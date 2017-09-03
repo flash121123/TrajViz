@@ -65,7 +65,6 @@ public class AWordList extends WordList implements Aprox,Iterable<Word> {
 			{
 				s.setStart(t);
 				t++;
-				int q=0;
 				s.setEnd(t);
 			}
 			//System.out.println(word_len(r,s));
@@ -98,7 +97,6 @@ public class AWordList extends WordList implements Aprox,Iterable<Word> {
 			{
 				s.setStart(t);
 				t++;
-				int q=0;
 				s.setEnd(t);
 			}
 			//System.out.println(word_len(r,s));
@@ -156,7 +154,6 @@ public class AWordList extends WordList implements Aprox,Iterable<Word> {
 		// TODO Auto-generated constructor stub
 		super();
 		ArrayList<Word> tmp=str2wordWithRule(t,r);
-		int j=0;
 		this.words = IterativeController.deepcopy(tmp);
 	}
 	
@@ -196,17 +193,6 @@ public class AWordList extends WordList implements Aprox,Iterable<Word> {
 	}
 
 
-	public double[][] toValue()
-	{
-		double[][] a=new double[words.size()][2];
-		
-		for(int i=0;i<words.size();i++)
-		{
-			a[i]=Grid.get(words.get(i).str());
-		}
-		
-		return a;
-	}
 
 	private ArrayList<Word> str2wordWithRule(Integer t,AGrammarRules r) {
 		// TODO Auto-generated method stub

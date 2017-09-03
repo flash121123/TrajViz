@@ -20,8 +20,8 @@ package edu.gmu.trajviz.gi.sequitur;
  */
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -29,8 +29,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.gmu.trajviz.gi.GrammarRuleRecord;
 import edu.gmu.trajviz.gi.GrammarRules;
-//import edu.gmu.trajviz.sax.SAXFactory;
-import edu.gmu.trajviz.logic.NumerosityReductionMapEntry;
 
 /**
  * The Rule. Adaption of Eibe Frank code for JMotif API, see {@link sequitur.info} for original

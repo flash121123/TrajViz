@@ -71,6 +71,35 @@ public class RuleInterval implements Comparable<RuleInterval>, Cloneable, Interv
 	  }
 
 	  /**
+	   * @param startPos starting position within the original time series
+	   */
+	  public void setStartPos(int startPos) {
+	    this.startPos = startPos;
+	  }
+
+	  /**
+	   * @return starting position within the original time series
+	   */
+	  public int getStartPos() {
+	    return startPos;
+	  }
+
+	  /**
+	   * @param endPos ending position within the original time series
+	   */
+	  public void setEndPos(int endPos) {
+	    this.endPos = endPos;
+	  }
+
+	  /**
+	   * @return ending position within the original time series
+	   */
+	  public int getEndPos() {
+	    return endPos;
+	  }
+
+	  
+	  /**
 	   * @param coverage the coverage to set
 	   */
 	  public void setCoverage(double coverage) {

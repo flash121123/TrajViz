@@ -1,6 +1,7 @@
 package core.agi;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 
 import core.Word;

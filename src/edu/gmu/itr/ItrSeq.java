@@ -2,25 +2,21 @@ package edu.gmu.itr;
 
 import java.util.ArrayList;
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.SortedSet;
 
 import base.GIHelper;
 import base.Interval1D;
 import base.IntervalST;
-import core.frame.Interval;
 import core.Word;
 import core.Collections.AWordList;
 import core.agi.AGrammarRuleRecord;
 import core.agi.AGrammarRules;
 import core.agi.ItrSequitur;
 import core.agi.RevisingCut;
-import edu.gmu.trajviz.gi.GrammarRuleRecord;
-import edu.gmu.trajviz.gi.GrammarRules;
 import edu.gmu.trajviz.logic.Route;
 import edu.gmu.trajviz.model.SequiturModel;
 import core.agi.RuleInterval;
@@ -44,10 +40,10 @@ public class ItrSeq {
 	public ItrSeq(String str,String name)
 	{
 		this.str=str;
-		datafileName=name;
+		setDatafileName(name);
 	}
 	
-	public ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> run(SAXRecords sd) throws Exception
+	public ArrayList<ArrayList<core.gi.RuleInterval>> run(SAXRecords sd) throws Exception
 	{
 		sd_global=sd;
 		long startTime = System.currentTimeMillis();
@@ -70,13 +66,11 @@ public class ItrSeq {
 		//System.out.println(arules.getLayer());
 		long endTime = System.currentTimeMillis()-startTime;
 		System.out.println(endTime);
-		boolean flag=true;
-		
 		updateRuleIntervals(arules, sd, alt.size());
 		strtoken=str.split(" ");
 		re=new RuleDensityEstimator(sd,arules);
 		re.run();
-		ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> x = toDisplay();
+		ArrayList<ArrayList<core.gi.RuleInterval>> x = toDisplay();
 		
 		return x;
 	}
@@ -86,14 +80,14 @@ public class ItrSeq {
 	}
 
 	public void setAlt(ArrayList<Double> lat) {
-		this.alt = lat;
+		alt = lat;
 	}
 	
 	public static ArrayList<Integer> countFilter=new ArrayList<Integer>();
 	
-	public ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> toDisplay()
+	public ArrayList<ArrayList<core.gi.RuleInterval>> toDisplay()
 	{
-		ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>> r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();
+		ArrayList<ArrayList<core.gi.RuleInterval>> r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
 		IntervalST<String> st=new IntervalST<String>();
 		String[] tsStr = strtoken;
 		ArrayList<Integer> saxWordsIndexes = new ArrayList<Integer>(sd_global.getAllIndices());
@@ -115,7 +109,7 @@ public class ItrSeq {
 			
 			//push2route(x);
 			//Potential false postive alarm
-			if(x.err()>2)//>5
+			if(x.err()>2)
 			{
 				ss.add(x.getRuleName());
 				continue;
@@ -215,11 +209,11 @@ public class ItrSeq {
 			{
 				rn.add(x.getExpandedRuleString());
 				lens2.add(x.getRuleLength());
-				ArrayList<edu.gmu.trajviz.logic.RuleInterval> tmp=new ArrayList<edu.gmu.trajviz.logic.RuleInterval>();
+				ArrayList<core.gi.RuleInterval> tmp=new ArrayList<core.gi.RuleInterval>();
 				for(int i=0;i<x.getRuleintervels().size();i++)
 				{
 					RuleInterval y = x.getRuleintervels().get(i);
-					tmp.add(new edu.gmu.trajviz.logic.RuleInterval(y.getStart(),y.getEnd()));
+					tmp.add(new core.gi.RuleInterval(y.getStart(),y.getEnd()));
 					
 				}
 				r.add(tmp);
@@ -228,7 +222,7 @@ public class ItrSeq {
 			boolean[] flags=new boolean[r.size()];
 			for(int i=0;i<flags.length;i++)
 				flags[i]=false;
-			HashMap<String,ArrayList<edu.gmu.trajviz.logic.RuleInterval>> rst=new HashMap<String,ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();
+			HashMap<String,ArrayList<core.gi.RuleInterval>> rst=new HashMap<String,ArrayList<core.gi.RuleInterval>>();
 			for(int i=0;i<rn.size();i++)
 			{
 				HashMap<String,Integer> hs=new HashMap<String,Integer>();
@@ -250,7 +244,7 @@ public class ItrSeq {
 					String tmp2=rn.get(j);
 					if(i==j)
 					{
-					   rst.put(tmp1,new ArrayList<edu.gmu.trajviz.logic.RuleInterval>(r.get(i)));
+					   rst.put(tmp1,new ArrayList<core.gi.RuleInterval>(r.get(i)));
 					   continue;
 					}
 					if(flags[j]==true)
@@ -287,7 +281,7 @@ public class ItrSeq {
 				int a=Collections.max(hs.values());
 				count.add(a);
 			}
-		r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();
+		r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
 		ArrayList<String> rn2 = new ArrayList<String>();
 		
 		
@@ -295,7 +289,7 @@ public class ItrSeq {
 		while(rn2.size()>200 || rn2.size()==0)
 		{
 			L++;
-			r=new ArrayList<ArrayList<edu.gmu.trajviz.logic.RuleInterval>>();
+			r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
 			
 			rn2 = new ArrayList<String>();
 		for(int i=0;i<rn.size();i++)
@@ -322,17 +316,6 @@ public class ItrSeq {
 	}
 	
 	
-	private static void push2route(AGrammarRuleRecord x) {
-		// TODO Auto-generated method stub
-		ArrayList<Route> tmp=new ArrayList<Route>();
-		for(RuleInterval xx : x)
-		{
-			ArrayList<Double> tmp1=new ArrayList<Double>(SequiturModel.lat.subList(xx.getStart(), xx.getEnd()));
-			ArrayList<Double> tmp2=new ArrayList<Double>(SequiturModel.lon.subList(xx.getStart(), xx.getEnd()));
-			tmp.add(new Route(tmp1,tmp2));
-		}
-		motif4density.add(tmp);
-	}
 
 	/** function lcs **/
     public static int lcss(String[] str1, String[] str2)
@@ -556,5 +539,13 @@ public static void updateRuleIntervals(AGrammarRules rules,
 
 public static ArrayList<Integer> getCount() {
 	return countFilter;
+}
+
+public String getDatafileName() {
+	return datafileName;
+}
+
+public void setDatafileName(String datafileName) {
+	this.datafileName = datafileName;
 }
 }

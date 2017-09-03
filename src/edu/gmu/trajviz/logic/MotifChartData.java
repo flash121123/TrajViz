@@ -1,18 +1,14 @@
 package edu.gmu.trajviz.logic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
 import core.agi.AGrammarRuleRecord;
 import core.agi.AGrammarRules;
-import edu.gmu.trajviz.gi.GrammarRuleRecord;
-import edu.gmu.trajviz.gi.GrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SAXMotif;
 import edu.gmu.trajviz.model.SequiturMessage;
-import edu.gmu.trajviz.logic.RuleInterval;
  //import edu.hawaii.jmotif.sax.NumerosityReductionStrategy;
 //import edu.hawaii.jmotif.sax.datastructures.DiscordRecords;
 import edu.gmu.trajviz.timeseries.TSException;

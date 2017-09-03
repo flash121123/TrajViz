@@ -48,21 +48,6 @@ public class ItrSequitur  {
 		return ar;
 	}
 
-	private static void removeReduancy(AGrammarRules ar2) {
-		// TODO Auto-generated method stub
-		int t=0;
-		for(String rn :ar2.keySet())
-		{
-			if(ar2.get(rn).getRuleintervels().size()==1)
-				t++;
-			if(t==1)
-				continue;
-			
-			AGrammarRuleRecord rs=ar2.get(rn);
-			if(rs.err()==0)
-				ar2.remove(rn);
-		}
-	}
 	private static void addOccurrences(AGrammarRules ar2, AWordList w) {
 		// TODO Auto-generated method stub
 		CountSet c=new CountSet();
@@ -108,7 +93,6 @@ public class ItrSequitur  {
 		return y;
 	}
 	private static void updateError(AGrammarRules ar2) {
-		// TODO Auto-generated method stub
 		
 		for(int i=1;i<ar2.count();i++)
 		{
@@ -124,8 +108,6 @@ public class ItrSequitur  {
 			if(r.isBasic())
 				continue;
 			
-			for(AWordList rx : r.getIntervals())
-			{
 				AWordList w=r.getRuleArray(ar);
 				for(int j=0;j<w.size();j++)
 				{
@@ -136,7 +118,6 @@ public class ItrSequitur  {
 						j--;
 					}
 					
-				}
 				
 				r.setExpend2ruleArray(w);
 			}

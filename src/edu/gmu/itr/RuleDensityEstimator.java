@@ -1,13 +1,9 @@
 package edu.gmu.itr;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.SortedSet;
-
-import base.WriteFile;
-import core.Word;
-import core.Collections.AWordList;
 import core.agi.AGrammarRuleRecord;
 import core.agi.AGrammarRules;
 import edu.gmu.trajviz.model.SequiturModel;
@@ -83,7 +79,7 @@ public class RuleDensityEstimator {
 		{
 			tmp.add(px);
 		}
-		Integer px=0;
+		
 		ArrayList<Integer> indices = new ArrayList<Integer>(sd.getAllIndices());
 		for(int index=0; index<indices.size()-1; index++)
 		{

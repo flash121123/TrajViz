@@ -1,11 +1,9 @@
 package edu.gmu.trajviz.view.table;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import core.agi.AGrammarRules;
-import edu.gmu.trajviz.gi.GrammarRules;
-import edu.gmu.trajviz.logic.RuleInterval;
+import core.gi.RuleInterval;
 
 /**
  * Table Data Model for the sequitur JTable

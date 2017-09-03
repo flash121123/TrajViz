@@ -1,9 +1,8 @@
 package edu.gmu.trajviz.gi;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import edu.gmu.trajviz.gi.sequitur.SAXRule;
-import edu.gmu.trajviz.logic.RuleInterval;
+import java.util.Arrays;
+import core.gi.RuleInterval;
 import edu.gmu.trajviz.model.SequiturModel;
 
 /**

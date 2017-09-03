@@ -3,6 +3,14 @@ package com.roots.map;
 import java.awt.Color;
 import java.text.DecimalFormat;
 
+/**
+ * 
+ * Function to adjust color bar
+ * 
+ * @author Xiaosheng Li, Yifeng Gao
+ *
+ */
+
 public class ColorBar {
 
 	private int largest;
