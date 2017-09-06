@@ -1,5 +1,6 @@
 package edu.gmu.trajviz.gi.sequitur;
 
+
 /*
  This class is part of a Java port of Craig Nevill-Manning's Sequitur algorithm.
  Copyright (C) 1997 Eibe Frank
@@ -54,7 +55,7 @@ public class SAXGuard extends SAXSymbol {
     n = this;
   }
 
-  /**
+	/**
    * {@inheritDoc}
    */
   public void cleanUp() {

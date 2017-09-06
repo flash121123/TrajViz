@@ -6,7 +6,7 @@ source code public repository. This code is released under [GPL v.2.0](https://w
 
 TrajViz 1.0 is a software for visualize motifs (frequently repeated subsequences) in spatial trajectories with GUI interfaces. The GUI enables user to interactive visualize with variable length patterns and anomalous discovery from time series
 
-It is implemented in Java and is based on [SAX](https://github.com/jMotif/SAX) and a variation of Iterative Grammatical Inference with [ItrSequitur]()
+It is implemented in Java and is based on [SAX](https://github.com/jMotif/SAX) and a variation of Iterative Grammatical Inference with [ItrSequitur](). The Interactive Map Panel GUI is build on the top of Stepan Rutz's code.
 
 In contrast with [GrammarViz 3.0](https://github.com/GrammarViz2/grammarviz2_src), the software is designed for detecting subsequence which *Spatially Similar*, which is different from traditional motif discovery. User can refer [GrammarViz 3.0](https://github.com/GrammarViz2/grammarviz2_src) for time series version motif based visualization software.
 

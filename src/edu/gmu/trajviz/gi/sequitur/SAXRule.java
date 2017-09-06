@@ -1,25 +1,8 @@
 package edu.gmu.trajviz.gi.sequitur;
 
-/*
- This class is part of a Java port of Craig Nevill-Manning's Sequitur algorithm.
- Copyright (C) 1997 Eibe Frank
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 import java.util.ArrayList;
+
+
 
 import java.util.Arrays;
 import java.util.Set;
@@ -27,8 +10,10 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import edu.gmu.trajviz.gi.GrammarRuleRecord;
-import edu.gmu.trajviz.gi.GrammarRules;
+import core.gi.GrammarRuleRecord;
+import core.gi.GrammarRules;
+import edu.gmu.trajviz.gi.sequitur.SAXGuard;
+import edu.gmu.trajviz.gi.sequitur.SAXSymbol;
 
 /**
  * The Rule. Adaption of Eibe Frank code for JMotif API, see {@link sequitur.info} for original
@@ -108,12 +93,6 @@ public class SAXRule {
    * @return the FIRST rule's symbol.
    */
   public SAXSymbol first() {
-	
-	  if (this.theGuard ==null){
-		System.out.println("null Guard.");
-		return null;
-	  }
-	
     return this.theGuard.n;
   }
 
@@ -253,11 +232,12 @@ public class SAXRule {
       ruleRecord.setRuleYield(countSpaces(rr));
     }
 
+    StringBuilder resultString = new StringBuilder(8192);
+    
     GrammarRuleRecord ruleRecord = arrRuleRecords.get(0);
-    StringBuilder resultString = new StringBuilder(ruleRecord.getRuleString() + 8192);
+    resultString.append(ruleRecord.getRuleString());
     
     int currentSearchStart = resultString.indexOf("R");
-  //  System.out.println("currentSearchStart"+currentSearchStart);
     while (currentSearchStart >= 0) {
       int spaceIdx = resultString.indexOf(" ", currentSearchStart);
       String ruleName = resultString.substring(currentSearchStart, spaceIdx + 1);
@@ -265,8 +245,6 @@ public class SAXRule {
       resultString.replace(spaceIdx - ruleName.length() + 1, spaceIdx + 1,
           arrRuleRecords.get(ruleId).getExpandedRuleString());
       currentSearchStart = resultString.indexOf("R");
-   //   System.out.println("loop: currentSearchStart"+currentSearchStart);
-
     }
     ruleRecord.setExpandedRuleString(resultString.toString().trim());
     // ruleRecord.setRuleYield(countSpaces(resultString));
@@ -340,7 +318,6 @@ public class SAXRule {
       res[i] = idx;
       i++;
     }
- //   System.out.println("res = "+res);
     return res;
   }
 
@@ -362,12 +339,12 @@ public class SAXRule {
     int processedRules = 0;
 
     StringBuilder sbCurrentRule = new StringBuilder();
-    
+
     while (processedRules < rules.size()) {
 
       currentRule = rules.elementAt(processedRules);
 
-      for (SAXSymbol sym = currentRule.first(); ((sym!=null)&&!sym.isGuard()); sym = sym.n) {
+      for (SAXSymbol sym = currentRule.first(); (!sym.isGuard()); sym = sym.n) {
         if (sym.isNonTerminal()) {
           SAXRule referedTo = ((SAXNonTerminal) sym).r;
           if ((rules.size() > referedTo.index) && (rules.elementAt(referedTo.index) == referedTo)) {
@@ -404,52 +381,23 @@ public class SAXRule {
     }
 
   }
-/*
- * this method is modified to adapt numerosity reduction strategy.
- */
-  public GrammarRules toFilteredGrammarRulesData(ArrayList<Integer> filteredRuleMap) {
-	    getSAXRules();
-	    expandRules();
-	    GrammarRules res = new GrammarRules();
-	   // for (GrammarRuleRecord arrRule : arrRuleRecords) {
-	    for (int i=0; i<filteredRuleMap.size();i++){	
-	  //    System.out.println("arrRuleRecords: "+i+" "+arrRuleRecords.get(filteredRuleMap.get(i)));
-	      res.addRule(arrRuleRecords.get(filteredRuleMap.get(i)));
-	    }
-	    return res;
-	  }
+
   public GrammarRules toGrammarRulesData() {
     getSAXRules();
     expandRules();
     GrammarRules res = new GrammarRules();
     for (GrammarRuleRecord arrRule : arrRuleRecords) {
-    	
-    //	if((countSpaces(arrRule.getExpandedRuleString()))>3)
       res.addRule(arrRule);
     }
     return res;
   }
-  /*
-   * this method is the original version.
-   */
-  public GrammarRules toGRD() {
-	    getSAXRules();
-	    expandRules();
-	    GrammarRules res = new GrammarRules();
-	    for (GrammarRuleRecord arrRule : arrRuleRecords) {
-	    	
-	    	//if((countSpaces(arrRule.getExpandedRuleString()))>3)
-	      res.addRule(arrRule);
-	    }
-	    return res;
-	  }
- 
+
   /**
    * Original getRules() method. Prints out rules. Killing it will brake tests.
    * 
    * @return the formatted rules string.
    */
-  public static String getRules() {
+  public static String printRules() {
 
     theRules.get(0).getSAXRules();
     expandRules();
@@ -518,7 +466,8 @@ public class SAXRule {
         text.append(' ');
         currentRuleString.append(' ');
       }
-      text.append(TAB).append(arrRuleRecords.get(processedRules).getExpandedRuleString()).append(TAB);
+      text.append(TAB).append(arrRuleRecords.get(processedRules).getExpandedRuleString())
+          .append(TAB);
       text.append(Arrays.toString(currentRule.getIndexes())).append(CR);
 
       processedRules++;

@@ -114,24 +114,6 @@ public class SequiturTableModel extends SequiturTableDataModel {
 	    	return Integer.class;
 	    if (columnIndex == SequiturTableColumns.LENGTH.ordinal())
 	    	return Integer.class;
-	    /*
-	    if (columnIndex == CombinedRulesTableColumns.RULE_LEVEL.ordinal())
-	      return Integer.class;
-	    if (columnIndex == CombinedRulesTableColumns.RULE_FREQUENCY.ordinal())
-	      return Integer.class;
-	    if (columnIndex == SequiturRulesTableColumns.SEQUITUR_RULE.ordinal())
-	      return String.class;
-	    if (columnIndex == SequiturRulesTableColumns.EXPANDED_SEQUITUR_RULE.ordinal())
-	      return String.class;
-	    if (columnIndex == SequiturRulesTableColumns.RULE_USE_FREQUENCY.ordinal())
-	      return Integer.class;
-	    if (columnIndex == SequiturRulesTableColumns.RULE_MEAN_LENGTH.ordinal())
-	      return Integer.class;
-	    if (columnIndex == SequiturRulesTableColumns.LENGTH.ordinal())
-	      return String.class;
-	    // if (columnIndex == SequiturTableColumns.RULE_INDEXES.ordinal())
-	    // return String.class;
-	*/
 	    
 	    return String.class;
 	  }

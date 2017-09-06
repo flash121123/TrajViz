@@ -10,7 +10,7 @@ import java.util.Set;
 
 import core.gi.GrammarRuleRecord;
 import core.gi.GrammarRules;
-import sax.SAXRecords;
+import edu.gmu.sax.SAXRecords;
 import base.Interval;
 
 

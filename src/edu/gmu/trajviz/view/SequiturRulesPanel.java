@@ -5,7 +5,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import javax.swing.JLabel;
@@ -19,7 +18,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTableHeader;
@@ -32,7 +30,6 @@ import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
 import core.gi.RuleInterval;
-import edu.gmu.trajviz.model.SequiturMessage;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.table.SequiturTableColumns;
 import edu.gmu.trajviz.view.table.SequiturTableModel;
@@ -57,7 +54,7 @@ private SequiturTableModel sequiturTableModel = new SequiturTableModel();
 
 private JXTable sequiturTable;
 
-private MapPanel mapPanel,mapPanel1;
+public MapPanel mapPanel,mapPanel1;
 
 private JScrollPane sequiturRulesPanel;
 
@@ -68,7 +65,6 @@ private boolean acceptListEvents;
 private MotifChartData chartData;
 
 private ArrayList<ArrayList<RuleInterval>> ruleIntervals ;
-private ArrayList<HashSet<Integer>> map ;
 private ArrayList<Integer> ruleMapLength;
 
 //private ArrayList<Integer> frequency;
@@ -86,7 +82,7 @@ consoleLogger.setLevel(LOGGING_LEVEL);
 * Comparator for the sorting of the Expanded Sequitur Rules Easy logic: sort by the length of the
 * Expanded Sequitur Rules
 */
-private Comparator<String> expandedRuleComparator = new Comparator<String>() {
+public Comparator<String> expandedRuleComparator = new Comparator<String>() {
 public int compare(String s1, String s2) {
   return s1.length() - s2.length();
 }
@@ -201,23 +197,7 @@ public void resetSelection() {
 }
 
 public void propertyChange(PropertyChangeEvent event) {
-String prop = event.getPropertyName();
-
-/*
-if (prop.equalsIgnoreCase(SequiturMessage.MAIN_CHART_CLICKED_MESSAGE)) {
-  String rule = (String) event.getNewValue();
-  System.out.println("SequiturRulesPanel.propertyChange.rule:     "+rule);
-  for (int row = 0; row <= sequiturRulesTable.getRowCount() - 1; row++) {
-    for (int col = 0; col <= sequiturRulesTable.getColumnCount() - 1; col++) {
-      if (rule.equals(chartData.convert2OriginalSAXAlphabet('1',
-          sequiturRulesTable.getValueAt(row, col).toString()))) {
-        sequiturRulesTable.scrollRectToVisible(sequiturRulesTable.getCellRect(row, 0, true));
-        sequiturRulesTable.setRowSelectionInterval(row, row);
-      }
-    }
-  }
-}
-*/
+  event.getPropertyName();
 }
 
 public ArrayList<String> rname;
@@ -292,8 +272,6 @@ public void setRulesData(MotifChartData chartData, ArrayList<ArrayList<RuleInter
 		this.ruleMapLength.add(-1);
 	}
 	sequiturTableModel.update(this.chartData.getGrammarRules(),this.ruleIntervals,this.ruleMapLength);//,this.frequency);
-	  	
-	//sequiturTableModel.update(this.chartData.getGrammarRules(),this.ruleIntervals,this.map);//,this.frequency);
 	resetPanel();
 	this.acceptListEvents = true;
 }

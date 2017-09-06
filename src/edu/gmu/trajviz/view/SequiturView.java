@@ -5,8 +5,6 @@ package edu.gmu.trajviz.view;
  * @author QingzheLi
  */
 
-import java.awt.Desktop;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -14,21 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -36,7 +26,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -48,7 +37,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.JTableHeader;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -84,7 +72,6 @@ public class SequiturView implements Observer, ActionListener{
 
 		  // relevant string constants go here
 		  //
-		  private static final String COMMA = ",";
 		  private static final String CR = "\n";
 		  private static final String TITLE_FONT = "helvetica";
 

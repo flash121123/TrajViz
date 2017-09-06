@@ -32,6 +32,7 @@ import com.roots.map.MapPanel;
 import edu.gmu.itr.Direction;
 import edu.gmu.itr.ItrSeq;
 import edu.gmu.itr.RuleDensityEstimator;
+import edu.gmu.timeseries.TSUtils;
 import edu.gmu.trajviz.gi.GrammarRuleRecord;
 import edu.gmu.trajviz.gi.GrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
@@ -42,7 +43,6 @@ import core.gi.RuleInterval;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 import edu.gmu.trajviz.timeseries.TSException;
 import edu.gmu.trajviz.util.StackTrace;
-import test.TSUtils;
 
 public class SequiturModel extends Observable {
 	// public static double MINLINK = 0.0;

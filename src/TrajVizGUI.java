@@ -1,16 +1,16 @@
 
 
+import edu.gmu.timeseries.TSUtils;
 import edu.gmu.trajviz.controller.SequiturController;
 
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.SequiturView;
-import test.TSUtils;
 
 
 /*
  * Main runnable of trajViz GUI
  * 
- * @author Qingzhe Li, Yifeng Gao
+ * @author Qingzhe Li, Yifeng Gao, Xiaosheng Li
  * 
  */
 public class TrajVizGUI{

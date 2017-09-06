@@ -10,6 +10,12 @@
  *    Stepan Rutz - initial implementation
  *******************************************************************************/
 
+/**
+ * The trajectories plotting function is implemented on the top of Stepan Rutz's 
+ * Interactive Map GUI code.
+ * 
+ * @author ygao, qz, xs
+ */
 package com.roots.map;
 
 import java.awt.AlphaComposite;
@@ -172,6 +178,10 @@ import edu.gmu.trajviz.view.SequiturRulesPanel;
  * @author stepan.rutz
  * @version $Revision$
  */
+
+
+
+
 public class MapPanel extends JPanel implements PropertyChangeListener {
 
 	private static final Logger log = Logger.getLogger(MapPanel.class.getName());

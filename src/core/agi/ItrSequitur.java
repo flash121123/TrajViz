@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 
 
+
 import base.CountSet;
-import test.SequiturFactory;
+import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
 import core.Word;
 import core.Collections.AWordList;
 import core.Collections.WordList;

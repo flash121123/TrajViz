@@ -3,7 +3,7 @@ package core.gi;
 import java.util.ArrayList;
 
 
-import test.SequiturFactory;
+import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
 import core.Collections.WordList;
 import core.frame.GInterface;
 import core.gi.RuleInterval;
