@@ -19,6 +19,7 @@
 package com.roots.map;
 
 import java.awt.AlphaComposite;
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -108,7 +109,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import edu.gmu.grid.DensityGrid;
 import edu.gmu.itr.Direction;
 import edu.gmu.itr.ItrSeq;
 import edu.gmu.itr.RuleDensityEstimator;

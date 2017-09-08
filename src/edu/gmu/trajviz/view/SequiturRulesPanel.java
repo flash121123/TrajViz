@@ -29,10 +29,10 @@ import ch.qos.logback.classic.Logger;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import core.gi.RuleInterval;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.table.SequiturTableColumns;
 import edu.gmu.trajviz.view.table.SequiturTableModel;
+import gmu.edu.core.gi.RuleInterval;
 
 /**
  * 

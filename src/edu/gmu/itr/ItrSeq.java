@@ -8,19 +8,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import base.GIHelper;
-import base.Interval1D;
-import base.IntervalST;
-import core.Word;
-import core.Collections.AWordList;
-import core.agi.AGrammarRuleRecord;
-import core.agi.AGrammarRules;
-import core.agi.ItrSequitur;
-import core.agi.RevisingCut;
+import edu.gmu.base.GIHelper;
+import edu.gmu.base.Interval;
+import edu.gmu.base.IntervalST;
+import edu.gmu.core.Word;
+import edu.gmu.core.agi.AGrammarRuleRecord;
+import edu.gmu.core.agi.AGrammarRules;
+import edu.gmu.core.agi.ItrSequitur;
+import edu.gmu.core.agi.RevisingCut;
+import edu.gmu.core.agi.RuleInterval;
 import edu.gmu.trajviz.logic.Route;
 import edu.gmu.trajviz.model.SequiturModel;
-import core.agi.RuleInterval;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
+import gmu.edu.core.Collections.AWordList;
 
 public class ItrSeq {
 
@@ -43,7 +43,7 @@ public class ItrSeq {
 		setDatafileName(name);
 	}
 	
-	public ArrayList<ArrayList<core.gi.RuleInterval>> run(SAXRecords sd) throws Exception
+	public ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> run(SAXRecords sd) throws Exception
 	{
 		sd_global=sd;
 		long startTime = System.currentTimeMillis();
@@ -70,7 +70,7 @@ public class ItrSeq {
 		strtoken=str.split(" ");
 		re=new RuleDensityEstimator(sd,arules);
 		re.run();
-		ArrayList<ArrayList<core.gi.RuleInterval>> x = toDisplay();
+		ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> x = toDisplay();
 		
 		return x;
 	}
@@ -85,9 +85,9 @@ public class ItrSeq {
 	
 	public static ArrayList<Integer> countFilter=new ArrayList<Integer>();
 	
-	public ArrayList<ArrayList<core.gi.RuleInterval>> toDisplay()
+	public ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> toDisplay()
 	{
-		ArrayList<ArrayList<core.gi.RuleInterval>> r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
+		ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> r=new ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>>();
 		IntervalST<String> st=new IntervalST<String>();
 		String[] tsStr = strtoken;
 		ArrayList<Integer> saxWordsIndexes = new ArrayList<Integer>(sd_global.getAllIndices());
@@ -172,7 +172,7 @@ public class ItrSeq {
 				{
 					
 					RuleInterval y = yyx.get(i);
-					Interval1D yy=new Interval1D(y);
+					Interval yy=new Interval(y);
 					 
 					if(st.search(yy)==null)
 					{
@@ -191,7 +191,7 @@ public class ItrSeq {
 			}
 			
 			Set<String> strSet=new HashSet<String>();
-			for(Interval1D xsa : st.searchAll(new Interval1D(0,alt.size())))
+			for(Interval xsa : st.searchAll(new Interval(0,alt.size())))
 			{
 				strSet.add(st.get(xsa));
 			}
@@ -209,11 +209,11 @@ public class ItrSeq {
 			{
 				rn.add(x.getExpandedRuleString());
 				lens2.add(x.getRuleLength());
-				ArrayList<core.gi.RuleInterval> tmp=new ArrayList<core.gi.RuleInterval>();
+				ArrayList<gmu.edu.core.gi.RuleInterval> tmp=new ArrayList<gmu.edu.core.gi.RuleInterval>();
 				for(int i=0;i<x.getRuleintervels().size();i++)
 				{
 					RuleInterval y = x.getRuleintervels().get(i);
-					tmp.add(new core.gi.RuleInterval(y.getStart(),y.getEnd()));
+					tmp.add(new gmu.edu.core.gi.RuleInterval(y.getStart(),y.getEnd()));
 					
 				}
 				r.add(tmp);
@@ -222,7 +222,7 @@ public class ItrSeq {
 			boolean[] flags=new boolean[r.size()];
 			for(int i=0;i<flags.length;i++)
 				flags[i]=false;
-			HashMap<String,ArrayList<core.gi.RuleInterval>> rst=new HashMap<String,ArrayList<core.gi.RuleInterval>>();
+			HashMap<String,ArrayList<gmu.edu.core.gi.RuleInterval>> rst=new HashMap<String,ArrayList<gmu.edu.core.gi.RuleInterval>>();
 			for(int i=0;i<rn.size();i++)
 			{
 				HashMap<String,Integer> hs=new HashMap<String,Integer>();
@@ -244,7 +244,7 @@ public class ItrSeq {
 					String tmp2=rn.get(j);
 					if(i==j)
 					{
-					   rst.put(tmp1,new ArrayList<core.gi.RuleInterval>(r.get(i)));
+					   rst.put(tmp1,new ArrayList<gmu.edu.core.gi.RuleInterval>(r.get(i)));
 					   continue;
 					}
 					if(flags[j]==true)
@@ -281,7 +281,7 @@ public class ItrSeq {
 				int a=Collections.max(hs.values());
 				count.add(a);
 			}
-		r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
+		r=new ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>>();
 		ArrayList<String> rn2 = new ArrayList<String>();
 		
 		
@@ -289,7 +289,7 @@ public class ItrSeq {
 		while(rn2.size()>200 || rn2.size()==0)
 		{
 			L++;
-			r=new ArrayList<ArrayList<core.gi.RuleInterval>>();
+			r=new ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>>();
 			
 			rn2 = new ArrayList<String>();
 		for(int i=0;i<rn.size();i++)

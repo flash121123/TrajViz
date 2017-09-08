@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimeZone;
 
-import core.agi.AGrammarRuleRecord;
-import core.agi.AGrammarRules;
-import core.agi.RuleInterval;
+import edu.gmu.core.agi.AGrammarRuleRecord;
+import edu.gmu.core.agi.AGrammarRules;
+import edu.gmu.core.agi.RuleInterval;
 import edu.gmu.trajviz.util.StackTrace;
 
 /**
@@ -493,7 +493,7 @@ public static double mean(ArrayList<Double> series) {
     return Math.sqrt((len * num0 - sum * sum) / (len * (len - 1)));
   }
 
-  public static boolean isCoveried(core.gi.RuleInterval x1, core.gi.RuleInterval x2)
+  public static boolean isCoveried(gmu.edu.core.gi.RuleInterval x1, gmu.edu.core.gi.RuleInterval x2)
   {
 	  double t=0;
 	  if(x1.getLength()>x2.getLength())
@@ -514,7 +514,7 @@ public static double mean(ArrayList<Double> series) {
 	  return false;
   }
   
-  public static double Coverage(core.gi.RuleInterval x1, core.gi.RuleInterval x2)
+  public static double Coverage(gmu.edu.core.gi.RuleInterval x1, gmu.edu.core.gi.RuleInterval x2)
   {
 	  double t=0;
 	  if(x1.getLength()>x2.getLength())
@@ -531,7 +531,7 @@ public static double mean(ArrayList<Double> series) {
 	  }
 	  return t;
   }
-  public static boolean isCovering(core.gi.RuleInterval x1, core.gi.RuleInterval x2) {
+  public static boolean isCovering(gmu.edu.core.gi.RuleInterval x1, gmu.edu.core.gi.RuleInterval x2) {
 		// TODO Auto-generated method stub
 		if(x1.getLength()>x2.getLength())
   		return isCovering(x1.getStart(),x1.getEnd(),x1.getLength(),x2.getStart(),x2.getEnd(),x2.getLength());
@@ -1361,8 +1361,8 @@ public static double mean(ArrayList<Double> series) {
 		  return false;
 	}
 	
-	public static boolean isCoveried(core.gi.RuleInterval x1,
-			core.gi.RuleInterval x2, double d) {
+	public static boolean isCoveried(gmu.edu.core.gi.RuleInterval x1,
+			gmu.edu.core.gi.RuleInterval x2, double d) {
 		// TODO Auto-generated method stub
 		double t=0;
 		  if(x1.getLength()>x2.getLength())

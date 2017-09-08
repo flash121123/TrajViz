@@ -10,10 +10,10 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import core.gi.GrammarRuleRecord;
-import core.gi.GrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SAXGuard;
 import edu.gmu.trajviz.gi.sequitur.SAXSymbol;
+import gmu.edu.core.gi.GrammarRuleRecord;
+import gmu.edu.core.gi.GrammarRules;
 
 /**
  * The Rule. Adaption of Eibe Frank code for JMotif API, see {@link sequitur.info} for original

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.HashMap;
-import core.agi.AGrammarRuleRecord;
-import core.agi.AGrammarRules;
+
+import edu.gmu.core.agi.AGrammarRuleRecord;
+import edu.gmu.core.agi.AGrammarRules;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 

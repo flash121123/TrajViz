@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
-import core.agi.AGrammarRuleRecord;
-import core.agi.AGrammarRules;
+import edu.gmu.core.agi.AGrammarRuleRecord;
+import edu.gmu.core.agi.AGrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SAXMotif;
 import edu.gmu.trajviz.model.SequiturMessage;
  //import edu.hawaii.jmotif.sax.NumerosityReductionStrategy;
@@ -190,7 +190,7 @@ public class MotifChartData extends Observable implements Observer {
    * @param ruleIdx The rule index.
    * @return The array of all intervals corresponding to this rule.
    */
-  public ArrayList<core.agi.RuleInterval> getRulePositionsByRuleNum(Integer ruleIdx) {
+  public ArrayList<edu.gmu.core.agi.RuleInterval> getRulePositionsByRuleNum(Integer ruleIdx) {
    // GrammarRuleRecord ruleRec = this.grammarRules.getRuleRecord(ruleIdx);
     AGrammarRuleRecord ruleRec = getRule(ruleIdx);
  //   System.out.println("grammarRulesRecord:  "+getRule(ruleIdx));
@@ -508,8 +508,8 @@ public class MotifChartData extends Observable implements Observer {
     for (int i = 0; i < this.getRulesNumber(); i++) {
 
       // iterate over all segments/motifs/sub-sequences which correspond to the rule
-      ArrayList<core.agi.RuleInterval> arrPos = this.getRulePositionsByRuleNum(i);
-      for (core.agi.RuleInterval saxPos : arrPos) {
+      ArrayList<edu.gmu.core.agi.RuleInterval> arrPos = this.getRulePositionsByRuleNum(i);
+      for (edu.gmu.core.agi.RuleInterval saxPos : arrPos) {
         SAXMotif motif = new SAXMotif();
         motif.setPos(saxPos);
         motif.setRuleIndex(i);

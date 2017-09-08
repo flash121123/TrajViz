@@ -1,6 +1,6 @@
 package edu.gmu.trajviz.gi.sequitur;
 
-import core.agi.RuleInterval;
+import edu.gmu.core.agi.RuleInterval;
 
 
 /**
@@ -27,7 +27,7 @@ public class SAXMotif implements Comparable<SAXMotif> {
   /**
    * @param saxPos the pos to set
    */
-  public void setPos(core.agi.RuleInterval saxPos) {
+  public void setPos(edu.gmu.core.agi.RuleInterval saxPos) {
     this.pos = saxPos;
   }
 

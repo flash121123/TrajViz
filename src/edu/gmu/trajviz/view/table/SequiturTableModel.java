@@ -2,8 +2,8 @@ package edu.gmu.trajviz.view.table;
 
 import java.util.ArrayList;
 
-import core.agi.AGrammarRules;
-import core.gi.RuleInterval;
+import edu.gmu.core.agi.AGrammarRules;
+import gmu.edu.core.gi.RuleInterval;
 
 /**
  * Table Data Model for the sequitur JTable

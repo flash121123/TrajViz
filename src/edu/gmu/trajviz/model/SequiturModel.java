@@ -17,12 +17,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Observable;
-import java.util.TreeMap;
 
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +31,14 @@ import edu.gmu.itr.Direction;
 import edu.gmu.itr.ItrSeq;
 import edu.gmu.itr.RuleDensityEstimator;
 import edu.gmu.timeseries.TSUtils;
-import edu.gmu.trajviz.gi.GrammarRuleRecord;
-import edu.gmu.trajviz.gi.GrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SequiturFactory;
 import edu.gmu.trajviz.logic.*;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import core.gi.RuleInterval;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 import edu.gmu.trajviz.timeseries.TSException;
 import edu.gmu.trajviz.util.StackTrace;
+import gmu.edu.core.gi.RuleInterval;
 
 public class SequiturModel extends Observable {
 	// public static double MINLINK = 0.0;
@@ -75,7 +71,7 @@ public class SequiturModel extends Observable {
 		clusterMap = new HashMap<Integer, Integer>();
 		mapToPreviousR0 = new ArrayList<Integer>();
 
-		rules = new GrammarRules();
+		//rules = new GrammarRules();
 		try {
 			SAXRecords saxFrequencyData = null;
 			saxFrequencyData = SequiturFactory.entries2SAXRecords(trimedTrack);
@@ -193,10 +189,7 @@ public class SequiturModel extends Observable {
 	public static int alphabetSize;
 	private double minLink;
 	private int noiseThreshold;
-	private GrammarRules rules;
 	public static HashMap<String, ArrayList<String>> allPostions;
-	public static ArrayList<GrammarRules> allRules;
-	public static TreeMap<String, GrammarRuleRecord> sortedRuleMap;
 	public static ArrayList<ArrayList<HashSet<Integer>>> allClusters;
 	private ArrayList<HashSet<Integer>> clusters;
 	private ArrayList<Integer> filter;
@@ -730,7 +723,7 @@ public class SequiturModel extends Observable {
 		this.noiseThreshold = noiseThreshold;
 
 		SequiturModel.alphabetSize = alphabetSize;
-		allRules = new ArrayList<GrammarRules>();
+	//	allRules = new ArrayList<GrammarRules>();
 		allFilters = new ArrayList<ArrayList<Integer>>();
 		allClusters = new ArrayList<ArrayList<HashSet<Integer>>>();
 		allR0 = new ArrayList<String[]>();
@@ -741,53 +734,6 @@ public class SequiturModel extends Observable {
 		lat = new ArrayList<Double>();
 		motifs = new ArrayList<ArrayList<Route>>();
 		lon = new ArrayList<Double>();
-
-		Comparator<String> expandedRuleComparator = new Comparator<String>() {
-			@Override
-			public int compare(String r1, String r2) {
-				Integer iteration1 = 0;
-				Integer iteration2 = 0;
-				Integer rule1 = 0;
-				Integer rule2 = 0;
-				if (r1.charAt(0) == 'I') {
-					if (r1.contains("r")) {
-						int rIndex = r1.indexOf("r");
-						iteration1 = Integer.valueOf(r1.substring(1, rIndex));
-						rule1 = Integer.valueOf(r1.substring(rIndex + 1));
-						// System.out.println("r1: "+r1+" iteration: "+iteration1+" rule1:
-		        // "+rule1);
-
-						// System.out.println(s+" = "+subRule );
-					} else
-						throw new IllegalArgumentException(r1 + " is not comparable with " + r2);
-				} else
-					throw new IllegalArgumentException(r1 + " is not comparable with " + r2);
-				if (r2.charAt(0) == 'I') {
-					if (r2.contains("r")) {
-						int rIndex = r2.indexOf("r");
-						iteration2 = Integer.valueOf(r2.substring(1, rIndex));
-						rule2 = Integer.valueOf(r2.substring(rIndex + 1));
-						// System.out.println("r2: "+r2+" iteration2: "+iteration2+" rule2:
-		        // "+rule2);
-
-						// System.out.println(s+" = "+subRule );
-
-					} else
-						throw new IllegalArgumentException(r1 + " is not comparable with " + r2);
-				} else
-					new IllegalArgumentException(r1 + " is not comparable with " + r2);
-
-				if (allRules.get(iteration2).get(rule2).getActualRuleYield() > allRules.get(iteration1).get(rule1)
-		        .getActualRuleYield())
-					return 1;
-
-				else
-					return -1;
-
-			}
-		};
-
-		SequiturModel.sortedRuleMap = new TreeMap<String, GrammarRuleRecord>(expandedRuleComparator);
 
 		StringBuffer sb = new StringBuffer();
 		if (null == this.latOri || null == this.lonOri || this.latOri.size() == 0 || this.lonOri.size() == 0) {
@@ -832,7 +778,6 @@ public class SequiturModel extends Observable {
 		drawOnMap();
 		System.out.println("total anomalies: " + anomalyRoutes.size());
 
-		System.out.println("Sorted Map.size = " + sortedRuleMap.size() + "sortedCounter = " + sortedCounter);
 		System.out.println(Collections.max(lat));
 		System.out.println(Collections.min(lat));
 		System.out.println(Collections.max(lon));
@@ -1143,49 +1088,6 @@ public class SequiturModel extends Observable {
 			return false;
 		}
 		return true;
-	}
-
-	public static String parseRule(String string) {
-		StringBuffer sb = new StringBuffer();
-		// System.out.println("string: "+string);
-		ArrayList<String> sa = new ArrayList<String>();
-		String[] stringArray = string.split(" ");
-		for (String s : stringArray) {
-			if (s.charAt(0) == 'I') {
-				if (s.contains("r")) {
-					int rIndex = s.indexOf("r");
-					Integer iteration = Integer.valueOf(s.substring(1, rIndex));
-					Integer rule = Integer.valueOf(s.substring(rIndex + 1));
-					String subRule = parseRule(allRules.get(iteration).get(rule).getExpandedRuleString());
-					sa.add(subRule);
-
-				} else if (s.contains("C")) {
-					int cIndex = s.indexOf("C");
-					Integer iteration = Integer.valueOf(s.substring(1, cIndex));
-					Integer cluster = Integer.valueOf(s.substring(cIndex + 1));
-					Integer ruleInCluster = (Integer) allClusters.get(iteration).get(cluster).toArray()[0];
-					String subRule = parseRule(allRules.get(iteration).get(ruleInCluster).getExpandedRuleString());
-					sa.add(subRule);
-
-				}
-			} else if (s.charAt(0) == 'R') {
-				throw new IllegalArgumentException("expect 'I' encounter 'R'");
-			}
-
-			else // Base Case
-			{
-				Integer test = Integer.valueOf(s);
-				sa.add(s);
-			}
-		}
-		for (int i = 0; i < sa.size() - 1; i++) {
-			sb.append(sa.get(i));
-			sb.append(" ");
-		}
-		if (sa.size() > 0)
-			sb.append(sa.get(sa.size() - 1));
-		String ans = sb.toString();
-		return ans;
 	}
 
 	public ArrayList<ArrayList<RuleInterval>> getNewRules() {

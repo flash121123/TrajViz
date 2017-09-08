@@ -48,10 +48,10 @@ import ch.qos.logback.classic.Level;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import core.gi.RuleInterval;
 import edu.gmu.trajviz.model.SequiturMessage;
 import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.util.StackTrace;
+import gmu.edu.core.gi.RuleInterval;
 import edu.gmu.itr.ItrSeq;
 import edu.gmu.trajviz.controller.SequiturController;
 import edu.gmu.trajviz.logic.Route;

@@ -10,10 +10,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import edu.gmu.core.Word;
 
 import java.util.Set;
-
-import core.Word;
 
 /**
  * The collection for SAXRecords. This datastructure is used in the parallel SAX implementation.
