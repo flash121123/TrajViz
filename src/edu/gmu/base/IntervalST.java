@@ -8,24 +8,25 @@ import edu.gmu.core.agi.RuleInterval;
 
 /**
  * 
- * Using Interval Tree for fast post processing. 
- * The code is slightly adjusted from 
+ * Using Random Binary Search Tree for storing Intervals
+ * 
+ * The code is wrote on the top of 
  * http://algs4.cs.princeton.edu/93intersection/IntervalST.java.html
  * 
- * 
+ * Interval Tree is used during the post-processing to merge overlapped patterns
  */
 
 public class IntervalST<Value>  {
 
-    private Node root;   // root of the BST
+    private Node root;  
 
-    // BST helper node data type
+    // Binary Search Tree node structure
     private class Node {
-        Interval interval;      // key
-        Value value;              // associated data
-        Node left, right;         // left and right subtrees
-        int N;                    // size of subtree rooted at this node
-        int max;                  // max endpoint in subtree rooted at this node
+        Interval interval;     //concisely version interval for saving memory 
+        Value value;              
+        Node left, right;         
+        int N;                    // size of subtree 
+        int max;                  // max end point in subtree rooted at this node
 
         Node(Interval interval, Value value) {
             this.interval = interval;
@@ -35,17 +36,11 @@ public class IntervalST<Value>  {
         }
     }
 
-
-   /***************************************************************************
-    *  BST search
-    ***************************************************************************/
-
     public boolean contains(Interval interval) {
         return (get(interval) != null);
     }
 
     // return value associated with the given key
-    // if no such value, return null
     public Value get(Interval interval) {
         return get(root, interval);
     }
@@ -58,10 +53,6 @@ public class IntervalST<Value>  {
         else              return x.value;
     }
 
-
-   /***************************************************************************
-    *  randomized insertion
-    ***************************************************************************/
     public boolean put(Interval interval, Value value) {
     	boolean flag=true;
         if (contains(interval)) { 
@@ -81,7 +72,7 @@ public class IntervalST<Value>  {
         int cmp = interval.compareTo(x.interval);
         if (cmp < 0)  x.left  = randomizedInsert(x.left,  interval, value);
         else          x.right = randomizedInsert(x.right, interval, value);
-        fix(x);
+        countAndInterval(x);
         return x;
     }
 
@@ -93,28 +84,22 @@ public class IntervalST<Value>  {
         return x;
     }
 
-
-   /***************************************************************************
-    *  deletion
-    ***************************************************************************/
     private Node joinLR(Node a, Node b) { 
         if (a == null) return b;
         if (b == null) return a;
 
         if (Math.random() * (size(a) + size(b)) < size(a))  {
             a.right = joinLR(a.right, b);
-            fix(a);
+            countAndInterval(a);
             return a;
         }
         else {
             b.left = joinLR(a, b.left);
-            fix(b);
+            countAndInterval(b);
             return b;
         }
     }
 
-    // remove and return value associated with given interval;
-    // if no such interval exists return null
     public Value remove(Interval interval) {
         Value value = get(interval);
         root = remove(root, interval);
@@ -127,18 +112,11 @@ public class IntervalST<Value>  {
         if      (cmp < 0) h.left  = remove(h.left,  interval);
         else if (cmp > 0) h.right = remove(h.right, interval);
         else              h = joinLR(h.left, h.right);
-        fix(h);
+        countAndInterval(h);
         return h;
     }
 
 
-   /***************************************************************************
-    *  Interval searching
-    ***************************************************************************/
-
-    // return an interval in data structure that intersects the given inteval;
-    // return null if no such interval exists
-    // running time is proportional to log N
     public Interval search(Interval interval) {
         return search(root, interval);
     }
@@ -154,16 +132,12 @@ public class IntervalST<Value>  {
         return null;
     }
 
-
-    // return *all* intervals in data structure that intersect the given interval
-    // running time is proportional to R log N, where R is the number of intersections
     public Iterable<Interval> searchAll(Interval interval) {
         LinkedList<Interval> list = new LinkedList<Interval>();
         searchAll(root, interval, list);
         return list;
     }
 
-    // look in subtree rooted at x
     public boolean searchAll(Node x, Interval interval, LinkedList<Interval> list) {
          boolean found1 = false;
          boolean found2 = false;
@@ -181,35 +155,15 @@ public class IntervalST<Value>  {
         return found1 || found2 || found3;
     }
 
-
-   /***************************************************************************
-    *  useful binary tree functions
-    ***************************************************************************/
-
-    // return number of nodes in subtree rooted at x
-    public int size() { return size(root); }
     private int size(Node x) { 
         if (x == null) return 0;
         else           return x.N;
     }
 
-    // height of tree (empty tree height = 0)
-    public int height() { return height(root); }
-    private int height(Node x) {
-        if (x == null) return 0;
-        return 1 + Math.max(height(x.left), height(x.right));
-    }
-
-
-   /***************************************************************************
-    *  helper BST functions
-    ***************************************************************************/
-
-    // fix auxilliar information (subtree count and max fields)
-    private void fix(Node x) {
+    private void countAndInterval(Node x) {
         if (x == null) return;
         x.N = 1 + size(x.left) + size(x.right);
-        x.max = max3(x.interval.get_end(), max(x.left), max(x.right));
+        x.max = Math.max(x.interval.get_end(), Math.max(max(x.left), max(x.right)));
     }
 
     private int max(Node x) {
@@ -217,18 +171,13 @@ public class IntervalST<Value>  {
         return x.max;
     }
 
-    // precondition: a is not null
-    private int max3(int a, int b, int c) {
-        return Math.max(a, Math.max(b, c));
-    }
-
     // right rotate
     private Node rotR(Node h) {
         Node x = h.left;
         h.left = x.right;
         x.right = h;
-        fix(h);
-        fix(x);
+        countAndInterval(h);
+        countAndInterval(x);
         return x;
     }
 
@@ -237,34 +186,12 @@ public class IntervalST<Value>  {
         Node x = h.right;
         h.right = x.left;
         x.left = h;
-        fix(h);
-        fix(x);
+        countAndInterval(h);
+        countAndInterval(x);
         return x;
     }
 
-
-   /***************************************************************************
-    *  Debugging functions that test the integrity of the tree
-    ***************************************************************************/
-
-    // check integrity of subtree count fields
-    public boolean check() { return checkCount() && checkMax(); }
-
-    // check integrity of count fields
-    private boolean checkCount() { return checkCount(root); }
-    private boolean checkCount(Node x) {
-        if (x == null) return true;
-        return checkCount(x.left) && checkCount(x.right) && (x.N == 1 + size(x.left) + size(x.right));
-    }
-
-    private boolean checkMax() { return checkMax(root); }
-    private boolean checkMax(Node x) {
-        if (x == null) return true;
-        return x.max ==  max3(x.interval.get_end(), max(x.left), max(x.right));
-    }
-
 	public void remove(AGrammarRuleRecord xx) {
-		// TODO Auto-generated method stub
 		for(RuleInterval xs : xx)
 		{
 			this.remove(xs);
@@ -272,7 +199,6 @@ public class IntervalST<Value>  {
 	}
 
 	private void remove(RuleInterval xs) {
-		// TODO Auto-generated method stub
 		Interval x=new Interval(xs.getStart(),xs.getEnd());
 		if(this.contains(x))
 			this.remove(x);

@@ -7,7 +7,7 @@ import edu.gmu.trajviz.model.SequiturModel;
 import edu.gmu.trajviz.view.SequiturView;
 
 
-/*
+/**
  * Main runnable of trajViz GUI
  * 
  * @author Qingzhe Li, Yifeng Gao, Xiaosheng Li
