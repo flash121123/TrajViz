@@ -1,8 +1,7 @@
 package edu.gmu.trajviz.model;
 
-import java.util.ArrayList;
 
-public class SequiturMessage {
+public class InductionMessage {
 
 	public static final String DATA_FNAME = "data_file_name";
 	public static final String STATUS_MESSAGE = "status_message";
@@ -23,7 +22,7 @@ public class SequiturMessage {
 	   * @param messageType set the message type.
 	   * @param payload set the payload.
 	   */
-	  public SequiturMessage(String messageType, Object payload) {
+	  public InductionMessage(String messageType, Object payload) {
 	    this.type = messageType;
 	    this.payload = payload;
 	  }
@@ -33,14 +32,14 @@ public class SequiturMessage {
 	   * @param messageType set the message type.
 	   * @param payload set the payload.
 	   */
-	  public SequiturMessage(String messageType, Object payload, Object payload1) {
+	  public InductionMessage(String messageType, Object payload, Object payload1) {
 		    this.type = messageType;
 		    this.payload = payload;
 		    this.payload1 = payload1;
 		//	System.out.println("SequiturMessagePayload1::::::::::::::::"+this.payload1);
 		    
 		  }
-	  public SequiturMessage(String messageType, Object payload, Object payload1, Object payload2) {
+	  public InductionMessage(String messageType, Object payload, Object payload1, Object payload2) {
 		    this.type = messageType;
 		    this.payload = payload;
 		    this.payload1 = payload1;

@@ -2,6 +2,7 @@ package edu.gmu.trajviz.view;
 
 import java.beans.PropertyChangeEvent;
 
+
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,20 +30,22 @@ import ch.qos.logback.classic.Logger;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import edu.gmu.trajviz.model.SequiturModel;
-import edu.gmu.trajviz.view.table.SequiturTableColumns;
-import edu.gmu.trajviz.view.table.SequiturTableModel;
+import edu.gmu.trajviz.model.ItrSequiturModel;
+import edu.gmu.trajviz.view.table.RuleTableColumns;
+import edu.gmu.trajviz.view.table.RuleTableModel;
 import gmu.edu.core.gi.RuleInterval;
 
 /**
  * 
  * handling the chart panel and sequitur rules table
  * 
- * @author Manfred Lerner, seninp, Qingzhe Li
+ * We visualize ItrSequitur Result on the top of Manfred Lerner, seninp's code
+ * 
+ * @author Qingzhe Li, Yifeng Gao
  * 
  */
 
-public class SequiturRulesPanel extends JPanel implements ListSelectionListener,
+public class ItrSequiturRulesPanel extends JPanel implements ListSelectionListener,
 PropertyChangeListener {
 
 /** Fancy serial. */
@@ -50,7 +53,7 @@ private static final long serialVersionUID = -2710973854572981568L;
 
 public static final String FIRING_PROPERTY = "selectedRow";
 
-private SequiturTableModel sequiturTableModel = new SequiturTableModel();
+private RuleTableModel sequiturTableModel = new RuleTableModel();
 
 private JXTable sequiturTable;
 
@@ -73,7 +76,7 @@ private ArrayList<Integer> ruleMapLength;
 private static Logger consoleLogger;
 private static Level LOGGING_LEVEL = Level.DEBUG;
 static {
-consoleLogger = (Logger) LoggerFactory.getLogger(SequiturRulesPanel.class);
+consoleLogger = (Logger) LoggerFactory.getLogger(ItrSequiturRulesPanel.class);
 consoleLogger.setLevel(LOGGING_LEVEL);
 }
 
@@ -93,9 +96,9 @@ public int compare(String s1, String s2) {
 /**
 * Constructor.
 */
-public SequiturRulesPanel() {
+public ItrSequiturRulesPanel() {
 super();
-this.sequiturTableModel = new SequiturTableModel();
+this.sequiturTableModel = new RuleTableModel();
 this.sequiturTable = new JXTable() {
 
   private static final long serialVersionUID = 2L;
@@ -131,9 +134,9 @@ org.jdesktop.swingx.renderer.DefaultTableRenderer renderer = (org.jdesktop.swing
 
 // Make some columns wider than the rest, so that the info fits in.
 TableColumnModel columnModel = sequiturTable.getColumnModel();
-columnModel.getColumn(SequiturTableColumns.RULE_NUMBER.ordinal()).setPreferredWidth(27);
-columnModel.getColumn(SequiturTableColumns.RULE_USE_FREQUENCY.ordinal()).setPreferredWidth(27);
-columnModel.getColumn(SequiturTableColumns.LENGTH.ordinal()).setPreferredWidth(36);
+columnModel.getColumn(RuleTableColumns.RULE_NUMBER.ordinal()).setPreferredWidth(27);
+columnModel.getColumn(RuleTableColumns.RULE_USE_FREQUENCY.ordinal()).setPreferredWidth(27);
+columnModel.getColumn(RuleTableColumns.LENGTH.ordinal()).setPreferredWidth(36);
 /*
 columnModel.getColumn(SequiturRulesTableColumns.RULE_USE_FREQUENCY.ordinal()).setPreferredWidth(40);
 columnModel.getColumn(SequiturRulesTableColumns.SEQUITUR_RULE.ordinal()).setPreferredWidth(100);
@@ -176,7 +179,7 @@ this.repaint();
 /**
 * @return sequitur table model
 */
-public SequiturTableModel getSequiturTableModel() {
+public RuleTableModel getSequiturTableModel() {
 return sequiturTableModel;
 }
 
@@ -210,7 +213,7 @@ public void valueChanged(ListSelectionEvent arg) {
     int row = sequiturTable.getSelectedRow();
     consoleLogger.debug("Selected ROW: " + row + " - COL: " + col);
     String rule = String.valueOf(sequiturTable.getValueAt(row,
-        SequiturTableColumns.RULE_NUMBER.ordinal()));
+        RuleTableColumns.RULE_NUMBER.ordinal()));
     //String actualRules = clusters.get(Integer.valueOf(rule)).toString();
     System.out.println("rule:::::"+rule);
     this.firePropertyChange(FIRING_PROPERTY, this.selectedSequiturRule, rule);
@@ -222,8 +225,8 @@ public void valueChanged(ListSelectionEvent arg) {
     for(RuleInterval xx : ruleIntervals.get(Integer.valueOf(rule)))
     {
     	
-    	System.out.println(SequiturModel.lat.subList(xx.startPos, xx.endPos));
-    	System.out.println(SequiturModel.lon.subList(xx.startPos, xx.endPos));
+    	System.out.println(ItrSequiturModel.lat.subList(xx.startPos, xx.endPos));
+    	System.out.println(ItrSequiturModel.lon.subList(xx.startPos, xx.endPos));
     	
     }
     
@@ -260,7 +263,6 @@ public void setRulesData(MotifChartData chartData, ArrayList<ArrayList<RuleInter
 	
 	this.chartData = chartData;
 	this.ruleIntervals = ruleIntervals;
-	//this.frequency = fre;
 	this.rname=s;
 	this.ruleMapLength = new ArrayList<Integer>();
 	for(String ss : s)

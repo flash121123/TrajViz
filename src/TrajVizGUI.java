@@ -1,10 +1,11 @@
 
 
 import edu.gmu.timeseries.TSUtils;
-import edu.gmu.trajviz.controller.SequiturController;
 
-import edu.gmu.trajviz.model.SequiturModel;
-import edu.gmu.trajviz.view.SequiturView;
+import edu.gmu.trajviz.controller.Controller;
+
+import edu.gmu.trajviz.model.ItrSequiturModel;
+import edu.gmu.trajviz.view.ItrSequiturView;
 
 
 /**
@@ -16,13 +17,13 @@ import edu.gmu.trajviz.view.SequiturView;
 public class TrajVizGUI{
 	
 	/** The model instance. */
-	private static SequiturModel model;
+	private static ItrSequiturModel model;
 
 	/** The controller instance. */
-	private static SequiturController controller;
+	private static Controller controller;
 
 	/** The view instance. */
-	private static SequiturView view;
+	private static ItrSequiturView view;
 
 	public static void main(String[] args){
 	  
@@ -32,13 +33,13 @@ public class TrajVizGUI{
 	    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "SAXSequitur");
 
 	    // model...
-	    model = new SequiturModel();
+	    model = new ItrSequiturModel();
 	    
 	    // controller...
-	    controller = new SequiturController(model);
+	    controller = new Controller(model);
 
 	    // view...
-	    view = new SequiturView(controller);
+	    view = new ItrSequiturView(controller);
 
 	    // make sure these two met...
 	    model.addObserver(view);

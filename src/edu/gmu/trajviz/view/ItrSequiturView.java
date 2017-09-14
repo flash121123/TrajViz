@@ -6,6 +6,7 @@ package edu.gmu.trajviz.view;
  */
 
 import java.awt.Dimension;
+
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -48,15 +49,15 @@ import ch.qos.logback.classic.Level;
 import com.roots.map.MapPanel;
 
 import edu.gmu.trajviz.logic.MotifChartData;
-import edu.gmu.trajviz.model.SequiturMessage;
-import edu.gmu.trajviz.model.SequiturModel;
+import edu.gmu.trajviz.model.InductionMessage;
+import edu.gmu.trajviz.model.ItrSequiturModel;
 import edu.gmu.trajviz.util.StackTrace;
 import gmu.edu.core.gi.RuleInterval;
 import edu.gmu.itr.ItrSeq;
-import edu.gmu.trajviz.controller.SequiturController;
+import edu.gmu.trajviz.controller.Controller;
 import edu.gmu.trajviz.logic.Route;
 
-public class SequiturView implements Observer, ActionListener{
+public class ItrSequiturView implements Observer, ActionListener{
 	private static final String APPLICATION_VERSION = "TrajectoryViz 0.0.1: visualizing trajectory patterns.";
 	
 	// static block - we instantiate the logger
@@ -66,7 +67,7 @@ public class SequiturView implements Observer, ActionListener{
 	private static Logger consoleLogger;
 	private static Level LOGGING_LEVEL = Level.INFO;
 	static {
-		consoleLogger = (Logger) LoggerFactory.getLogger(SequiturView.class);
+		consoleLogger = (Logger) LoggerFactory.getLogger(ItrSequiturView.class);
 		consoleLogger.setLevel(LOGGING_LEVEL);
 		  }
 
@@ -95,13 +96,13 @@ public class SequiturView implements Observer, ActionListener{
 		  private static final JMenuBar menuBar = new JMenuBar();	  
 		  
 		  /** Global controller handler - controller is supplier of action handlers. */
-		  private SequiturController controller;
+		  private Controller controller;
 
 		  // data source related variables
 		  //
 		  public MapPanel mapPanel,mapPanel1;
 		  private JTabbedPane tabbedRulesPane;
-		  private SequiturRulesPanel sequiturRulesPane;
+		  private ItrSequiturRulesPanel sequiturRulesPane;
 		  private JPanel dataSourcePane;
 		  private JTextField dataFilePathField;
 		  private JButton selectFileButton;
@@ -134,7 +135,7 @@ public class SequiturView implements Observer, ActionListener{
 		   * 
 		   * @param controller The controller used for the application flow control.
 		   */
-	public SequiturView(SequiturController controller) {
+	public ItrSequiturView(Controller controller) {
 		this.controller = controller;
 	}
 	
@@ -222,7 +223,7 @@ public class SequiturView implements Observer, ActionListener{
 
 	private void buildRulesPane() {
 		tabbedRulesPane = new JTabbedPane();
-		sequiturRulesPane = new SequiturRulesPanel();
+		sequiturRulesPane = new ItrSequiturRulesPanel();
 		MigLayout sequiturPaneLayout = new MigLayout(",insets 0 0 0 0", "[fill,grow]", "[fill,grow]");
 		sequiturRulesPane.setLayout(sequiturPaneLayout);
 
@@ -537,9 +538,9 @@ public class SequiturView implements Observer, ActionListener{
 	        mapPanel.setZoom(12);  // set some zoom level (1-18 are valid)
 	        mapPanel1.setZoom(12);
 	     //   mapPanel1.setRuleDetails(-1);
-			  double lat = SequiturModel.getLatitudeCenter();
+			  double lat = ItrSequiturModel.getLatitudeCenter();
 			  
-			  double lon = SequiturModel.getLongitudeCenter();
+			  double lon = ItrSequiturModel.getLongitudeCenter();
 			  System.out.println("View:  lat:  "+lat+"       lon: "+lon);
 			  Point position = mapPanel.computePosition(new Point2D.Double(lon, lat));
 			  mapPanel.setCenterPosition(position);
@@ -568,11 +569,11 @@ public class SequiturView implements Observer, ActionListener{
 	    	  mapPanel1.setRuleDetails2(-1);
 //	    	  System.out.println("fffffffffffffffff"+  mapPanel1.getRuleDetails());
 	    	  //mapPanel.setBlocks(SequiturModel.getLatOri(), SequiturModel.getLonOri());
-	    	  mapPanel.setMotifs(SequiturModel.getMotifs());
-	    	  mapPanel.setAllTrajectories(SequiturModel.getRawTrajectory());
+	    	  mapPanel.setMotifs(ItrSequiturModel.getMotifs());
+	    	  mapPanel.setAllTrajectories(ItrSequiturModel.getRawTrajectory());
 	    	 
-	    	  mapPanel.setAllAnomalies(SequiturModel.getAnomaly());
-	    	  mapPanel1.setMotifs(SequiturModel.getMotifs());
+	    	  mapPanel.setAllAnomalies(ItrSequiturModel.getAnomaly());
+	    	  mapPanel1.setMotifs(ItrSequiturModel.getMotifs());
 	    	 
 //	    	  System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+  mapPanel1.getRuleDetails());
 	    	  
@@ -587,12 +588,12 @@ public class SequiturView implements Observer, ActionListener{
 		  }
 	  @Override
 	  public void update(Observable o, Object arg) {
-	    if (arg instanceof SequiturMessage) {
-	      final SequiturMessage message = (SequiturMessage) arg;
+	    if (arg instanceof InductionMessage) {
+	      final InductionMessage message = (InductionMessage) arg;
 	    
 	 // new FileName
 	      //
-	      if (SequiturMessage.DATA_FNAME.equalsIgnoreCase(message.getType())) {
+	      if (InductionMessage.DATA_FNAME.equalsIgnoreCase(message.getType())) {
 	        Runnable doHighlight = new Runnable() {
 	          @Override
 	          public void run() {
@@ -606,11 +607,11 @@ public class SequiturView implements Observer, ActionListener{
 
 	      // new log message
 	      //
-	      else if (SequiturMessage.STATUS_MESSAGE.equalsIgnoreCase(message.getType())) {
+	      else if (InductionMessage.STATUS_MESSAGE.equalsIgnoreCase(message.getType())) {
 	        log(Level.ALL, (String) message.getPayload());
 	      //  log(Level.ALL, (String) message.getPayload1());
 	      }
-	      else if (SequiturMessage.CHART_MESSAGE.equalsIgnoreCase(message.getType())) {
+	      else if (InductionMessage.CHART_MESSAGE.equalsIgnoreCase(message.getType())) {
 	    	  MotifChartData chartData = (MotifChartData) message.getPayload();
 	    	  @SuppressWarnings("unchecked")
 			ArrayList<ArrayList<RuleInterval>> ruleIntervals = (ArrayList<ArrayList<RuleInterval>>) message.getPayload1();
@@ -630,7 +631,7 @@ public class SequiturView implements Observer, ActionListener{
 	    	//  sequiturRulesPane.clear();
 	    	 // frame.repaint();
 	      }
-	      else if (SequiturMessage.TIME_SERIES_MESSAGE.equalsIgnoreCase(message.getType())) {
+	      else if (InductionMessage.TIME_SERIES_MESSAGE.equalsIgnoreCase(message.getType())) {
 	    	 // sequiturRulesPane.clear();
 	    	  
 	    	  frame.repaint();

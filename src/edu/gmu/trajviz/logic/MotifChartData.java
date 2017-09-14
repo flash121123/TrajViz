@@ -8,7 +8,7 @@ import java.util.Observer;
 import edu.gmu.core.agi.AGrammarRuleRecord;
 import edu.gmu.core.agi.AGrammarRules;
 import edu.gmu.trajviz.gi.sequitur.SAXMotif;
-import edu.gmu.trajviz.model.SequiturMessage;
+import edu.gmu.trajviz.model.InductionMessage;
  //import edu.hawaii.jmotif.sax.NumerosityReductionStrategy;
 //import edu.hawaii.jmotif.sax.datastructures.DiscordRecords;
 import edu.gmu.trajviz.timeseries.TSException;
@@ -637,7 +637,7 @@ public class MotifChartData extends Observable implements Observer {
 */
   @Override
   public void update(Observable o, Object arg) {
-    if (arg instanceof SequiturMessage) {
+    if (arg instanceof InductionMessage) {
       this.setChanged();
       notifyObservers(arg);
     }

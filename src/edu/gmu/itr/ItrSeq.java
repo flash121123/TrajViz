@@ -3,6 +3,7 @@ package edu.gmu.itr;
 import java.util.ArrayList;
 
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ import edu.gmu.core.agi.ItrSequitur;
 import edu.gmu.core.agi.RevisingCut;
 import edu.gmu.core.agi.RuleInterval;
 import edu.gmu.trajviz.logic.Route;
-import edu.gmu.trajviz.model.SequiturModel;
+import edu.gmu.trajviz.model.ItrSequiturModel;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 import gmu.edu.core.Collections.AWordList;
 
@@ -27,7 +28,7 @@ public class ItrSeq {
 	public static ArrayList<String> rn;
 	
 	public static String str;
-	public int err=3;
+	public int err=2;
 	public static AGrammarRules arules;
 	public static ArrayList<Double> alt;
 	public static ArrayList<ArrayList<Route>> motif4density=new ArrayList<ArrayList<Route>>();  
@@ -116,7 +117,7 @@ public class ItrSeq {
 			}
 			
 			//too short motif for display
-			if(x.getRuleYield()<SequiturModel.minYield)
+			if(x.getRuleYield()<ItrSequiturModel.minYield)
 			{
 				ss.add(x.getRuleName());
 				continue;
@@ -285,7 +286,7 @@ public class ItrSeq {
 		ArrayList<String> rn2 = new ArrayList<String>();
 		
 		
-		Integer L=SequiturModel.mfthreshold;
+		Integer L=ItrSequiturModel.mfthreshold;
 		while(rn2.size()>200 || rn2.size()==0)
 		{
 			L++;

@@ -8,12 +8,14 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * 
- * Table Data Model for the sequitur JTable
+ * Table Data Model for Grammar Rule Inducted
  * 
- * @author Manfred Lerner
+ * Build on the top of Manfred Lerner's code in GrammarViz
+ * 
+ * @author Qingzhe Li, Yifeng Gao
  * 
  */
-public class SequiturTableDataModel extends AbstractTableModel {
+public class RuleTableDataModel extends AbstractTableModel {
 
   /** Fancy serial. */
   private static final long serialVersionUID = -6894512220338171366L;
@@ -25,7 +27,7 @@ public class SequiturTableDataModel extends AbstractTableModel {
   /**
    * Constructor.
    */
-  public SequiturTableDataModel() {
+  public RuleTableDataModel() {
     rows = new ArrayList<Object>();
   }
 
@@ -65,9 +67,9 @@ public class SequiturTableDataModel extends AbstractTableModel {
    * @param row the row index.
    * @param rowData the row data map.
    */
-  protected void updateRow(int row, EnumMap<SequiturTableColumns, Object> rowData) {
+  protected void updateRow(int row, EnumMap<RuleTableColumns, Object> rowData) {
     Object[] changedItem = (Object[]) rows.get(row);
-    for (Map.Entry<SequiturTableColumns, Object> entry : rowData.entrySet()) {
+    for (Map.Entry<RuleTableColumns, Object> entry : rowData.entrySet()) {
       changedItem[entry.getKey().ordinal()] = entry.getValue();
     }
     fireTableRowsUpdated(row, row);

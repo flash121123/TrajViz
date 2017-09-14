@@ -23,7 +23,7 @@ public class AdaptiveBlocks {
 		this.alphabetSize = n;
 		ArrayList<Double> latOri = new ArrayList<Double> ();
 		ArrayList<Double> lonOri = new ArrayList<Double> ();
-		int K=100;
+		int K=200;
 		for (int i=0; i<latOri1.size();i++) {
 			
 			

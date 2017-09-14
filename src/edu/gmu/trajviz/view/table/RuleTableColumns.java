@@ -5,7 +5,7 @@ package edu.gmu.trajviz.view.table;
  * @author Manfred Lerner, seninp
  * 
  */
-public enum SequiturTableColumns {
+public enum RuleTableColumns {
 	
 	 
 	  RULE_NUMBER("R#"),
@@ -21,7 +21,7 @@ public enum SequiturTableColumns {
 
 	  private final String columnName;
 
-	  SequiturTableColumns(String columnName) {
+	  RuleTableColumns(String columnName) {
 	    this.columnName = columnName;
 	  }
 

@@ -11,7 +11,7 @@ import gmu.edu.core.gi.RuleInterval;
  * @author Manfred Lerner, seninp
  * 
  */
-public class SequiturTableModel extends SequiturTableDataModel {
+public class RuleTableModel extends RuleTableDataModel {
 
 	  /** Fancy serial. */
 	  private static final long serialVersionUID = -2952232752352963293L;
@@ -19,8 +19,8 @@ public class SequiturTableModel extends SequiturTableDataModel {
 	  /**
 	   * Constructor.
 	   */
-	  public SequiturTableModel() {
-		  SequiturTableColumns[] columns = SequiturTableColumns.values();
+	  public RuleTableModel() {
+		  RuleTableColumns[] columns = RuleTableColumns.values();
 	    String[] schemaColumns = new String[columns.length];
 	    for (int i = 0; i < columns.length; i++) {
 	      schemaColumns[i] = columns[i].getColumnName();
@@ -106,13 +106,13 @@ public class SequiturTableModel extends SequiturTableDataModel {
 	     * for the RuleNumber and RuleFrequency column we use column class Integer.class so we can sort
 	     * it correctly in numerical order
 	     */
-		if (columnIndex == SequiturTableColumns.RULE_NUMBER.ordinal())
+		if (columnIndex == RuleTableColumns.RULE_NUMBER.ordinal())
 		  return Integer.class;  
 		//if (columnIndex == CombinedRulesTableColumns.COMBINED_RULE.ordinal())
 		//	  return Integer.class;  
-	    if (columnIndex == SequiturTableColumns.RULE_USE_FREQUENCY.ordinal())
+	    if (columnIndex == RuleTableColumns.RULE_USE_FREQUENCY.ordinal())
 	    	return Integer.class;
-	    if (columnIndex == SequiturTableColumns.LENGTH.ordinal())
+	    if (columnIndex == RuleTableColumns.LENGTH.ordinal())
 	    	return Integer.class;
 	    
 	    return String.class;

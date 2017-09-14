@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import edu.gmu.core.agi.AGrammarRuleRecord;
 import edu.gmu.core.agi.AGrammarRules;
-import edu.gmu.trajviz.model.SequiturModel;
+import edu.gmu.trajviz.model.ItrSequiturModel;
 import edu.gmu.trajviz.sax.datastructures.SAXRecords;
 
 public class RuleDensityEstimator {
@@ -119,7 +119,7 @@ public class RuleDensityEstimator {
 		ArrayList<Integer> az3=new ArrayList<Integer>();
 		ArrayList<Integer> az4=new ArrayList<Integer>();
 		ArrayList<Integer> tz=new ArrayList<Integer>();
-		int Th=SequiturModel.anomalythreshold;
+		int Th=ItrSequiturModel.anomalythreshold;
 		for(int i=0;i<dense.size();i++)
 		{
 			

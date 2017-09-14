@@ -116,8 +116,8 @@ import edu.gmu.trajviz.logic.AdaptiveBlocks;
 import edu.gmu.trajviz.logic.Blocks;
 import edu.gmu.trajviz.logic.Location;
 import edu.gmu.trajviz.logic.Route;
-import edu.gmu.trajviz.model.SequiturModel;
-import edu.gmu.trajviz.view.SequiturRulesPanel;
+import edu.gmu.trajviz.model.ItrSequiturModel;
+import edu.gmu.trajviz.view.ItrSequiturRulesPanel;
 
 //test
 //import roaf.gps.Position;
@@ -649,7 +649,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		 * 
 		 * else
 		 */
-		if (SequiturRulesPanel.FIRING_PROPERTY.equalsIgnoreCase(evt.getPropertyName())) {
+		if (ItrSequiturRulesPanel.FIRING_PROPERTY.equalsIgnoreCase(evt.getPropertyName())) {
 			String newlySelectedRaw = (String) evt.getNewValue();
 			setRuleDetails(Integer.valueOf(newlySelectedRaw));
 
@@ -705,7 +705,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			try {
 				paintInternal(g);
 
-				if(SequiturModel.isColorBarPlot)
+				if(ItrSequiturModel.isColorBarPlot)
 				{
 				if (ruleDetails < 0 || ruleDetails > motifs.size()) // Display all
 				                                                    // motifs on left
@@ -734,10 +734,10 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	}
 
 	public void setMotifs(ArrayList<ArrayList<Route>> motifs) {
-		if (SequiturModel.motifs == null)
+		if (ItrSequiturModel.motifs == null)
 			this.motifs = motifs;
 		else
-			this.motifs = SequiturModel.motifs;
+			this.motifs = ItrSequiturModel.motifs;
 
 	}
 
@@ -1402,7 +1402,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		 */
 
 		// draw the legend ticks
-		if(SequiturModel.isColorBarPlot)
+		if(ItrSequiturModel.isColorBarPlot)
 		{
 		String label = "";
 		DecimalFormat df = new DecimalFormat("####");
@@ -1642,8 +1642,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		ArrayList<Integer> dense = RuleDensityEstimator.dense;
 		ArrayList<Integer> indexStart = RuleDensityEstimator.indexStart;
 		ArrayList<Integer> indexEnd = RuleDensityEstimator.indexEnd;
-		ArrayList<Double> lat = SequiturModel.lat;
-		ArrayList<Double> lon = SequiturModel.lon;
+		ArrayList<Double> lat = ItrSequiturModel.lat;
+		ArrayList<Double> lon = ItrSequiturModel.lon;
 
 		// Basic Setting
 		this.setHeatMapColorsAllTrajectory(dmax);
@@ -1662,7 +1662,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			int actualCount = d;
 			// System.out.println("########: "+maxDenseCount);
 			// int actualCount = 1;
-			if (d < SequiturModel.anomalythreshold) {
+			if (d < ItrSequiturModel.anomalythreshold) {
 				for (int k = start; k < end; k++) {
 					if (lon.get(k) < -180 || lat.get(k) < -180 || lon.get(k + 1) < -180 || lat.get(k + 1) < -180)
 						continue;
@@ -1689,7 +1689,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			int actualCount = d;
 			// System.out.println("########: "+maxDenseCount);
 			// int actualCount = 1;
-			if (d < SequiturModel.anomalythreshold) {
+			if (d < ItrSequiturModel.anomalythreshold) {
 				continue;
 			} else {
 				for (int k = start; k < end; k++) {

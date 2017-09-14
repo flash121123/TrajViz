@@ -1,29 +1,26 @@
 package edu.gmu.trajviz.controller;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
 import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 
 import javax.swing.JFileChooser;
 
 import edu.gmu.trajviz.logic.UserSession;
-import edu.gmu.trajviz.model.SequiturMessage;
-import edu.gmu.trajviz.model.SequiturModel;
+import edu.gmu.trajviz.model.InductionMessage;
+import edu.gmu.trajviz.model.ItrSequiturModel;
 /**
  * Implements the Controller component for TrajViz2 GUI MVC.
  * 
  * @author qz
  */
-public class SequiturController extends Observable implements ActionListener {
-  private SequiturModel model;
+public class Controller extends Observable implements ActionListener {
+  private ItrSequiturModel model;
 
   private UserSession session;
   
-  public SequiturController(SequiturModel model) {
+  public Controller(ItrSequiturModel model) {
 	    super();
 	    this.model = model;
 	    this.session = new UserSession();
@@ -100,7 +97,7 @@ public class SequiturController extends Observable implements ActionListener {
   public void actionPerformed(ActionEvent e) {
 	 
     this.setChanged();
-    notifyObservers(new SequiturMessage(SequiturMessage.STATUS_MESSAGE,"controller: Unknown action performed " + e.getActionCommand()));
+    notifyObservers(new InductionMessage(InductionMessage.STATUS_MESSAGE,"controller: Unknown action performed " + e.getActionCommand()));
       
   }
   /**
@@ -110,7 +107,7 @@ public class SequiturController extends Observable implements ActionListener {
    */
   private void log(String message) {
     this.setChanged();
-    notifyObservers(new SequiturMessage(SequiturMessage.STATUS_MESSAGE, "controller: " + message));
+    notifyObservers(new InductionMessage(InductionMessage.STATUS_MESSAGE, "controller: " + message));
   }
 public UserSession getSession() {
 	return this.session;

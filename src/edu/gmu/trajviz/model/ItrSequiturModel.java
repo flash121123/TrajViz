@@ -40,7 +40,7 @@ import edu.gmu.trajviz.timeseries.TSException;
 import edu.gmu.trajviz.util.StackTrace;
 import gmu.edu.core.gi.RuleInterval;
 
-public class SequiturModel extends Observable {
+public class ItrSequiturModel extends Observable {
 	// public static double MINLINK = 0.0;
 	// public final static double (minLink*2) = 0.0;
 	public final static int EVAL_RESOLUTION = 100;
@@ -65,7 +65,7 @@ public class SequiturModel extends Observable {
 		//readStations();
 		//readPemsTraffic();
 		//updatepp();
-		SequiturModel.isColorBarPlot=true;
+		ItrSequiturModel.isColorBarPlot=true;
 		clusters = new ArrayList<HashSet<Integer>>();
 		filter = new ArrayList<Integer>();
 		clusterMap = new HashMap<Integer, Integer>();
@@ -78,7 +78,7 @@ public class SequiturModel extends Observable {
 			System.out.println("Input String Length: " + countSpaces(saxFrequencyData.getSAXString(SPACE)));
 			consoleLogger.trace("String: " + saxFrequencyData.getSAXString(SPACE));
 			// System.out.println("String: "+ saxFrequencyData.getSAXString(SPACE));
-			consoleLogger.debug("running sequitur...");
+			consoleLogger.debug("running ItrSequitur...");
 
 			ItrSeq ss = new ItrSeq(saxFrequencyData.getSAXString(" "), this.dataFileName);
 			ss.setAlt(lat);
@@ -258,7 +258,7 @@ public class SequiturModel extends Observable {
 	public static boolean isColorBarPlot;
 
 	static {
-		consoleLogger = (Logger) LoggerFactory.getLogger(SequiturModel.class);
+		consoleLogger = (Logger) LoggerFactory.getLogger(ItrSequiturModel.class);
 		consoleLogger.setLevel(LOGGING_LEVEL);
 	}
 
@@ -299,7 +299,7 @@ public class SequiturModel extends Observable {
 		// notify the View
 		this.setChanged();
 		
-		notifyObservers(new SequiturMessage(SequiturMessage.DATA_FNAME, this.getDataFileName()));
+		notifyObservers(new InductionMessage(InductionMessage.DATA_FNAME, this.getDataFileName()));
 
 		// this notification tells GUI which file was selected as the data source
 		this.log("set file " + filename + " as current data source");
@@ -319,7 +319,7 @@ public class SequiturModel extends Observable {
 			this.log("unable to load data - no data source select yet");
 			return;
 		}
-		SequiturModel.isColorBarPlot=false;
+		ItrSequiturModel.isColorBarPlot=false;
 		Path path = Paths.get(this.dataFileName);
 		if (!Files.exists(path)) {
 			this.log("file" + this.dataFileName + "doesn't exist.");
@@ -478,7 +478,7 @@ public class SequiturModel extends Observable {
 		this.log("loaded " + latOri.size() + " points from " + this.dataFileName);
 
 		setChanged();
-		notifyObservers(new SequiturMessage(SequiturMessage.TIME_SERIES_MESSAGE, latOri, lonOri));
+		notifyObservers(new InductionMessage(InductionMessage.TIME_SERIES_MESSAGE, latOri, lonOri));
 
 	}
 
@@ -645,7 +645,7 @@ public class SequiturModel extends Observable {
 		consoleLogger.debug("loaded " + latOri.size() + " points and " + trajCounter + " Trajecoties... ");
 		this.log("loaded " + latOri.size() + " points from " + this.dataFileName);
 		setChanged();
-		notifyObservers(new SequiturMessage(SequiturMessage.TIME_SERIES_MESSAGE, latOri, lonOri));
+		notifyObservers(new InductionMessage(InductionMessage.TIME_SERIES_MESSAGE, latOri, lonOri));
 	}
 
 	public static double getLatitudeCenter() {
@@ -722,7 +722,7 @@ public class SequiturModel extends Observable {
 		noiseThreshold = 2;
 		this.noiseThreshold = noiseThreshold;
 
-		SequiturModel.alphabetSize = alphabetSize;
+		ItrSequiturModel.alphabetSize = alphabetSize;
 	//	allRules = new ArrayList<GrammarRules>();
 		allFilters = new ArrayList<ArrayList<Integer>>();
 		allClusters = new ArrayList<ArrayList<HashSet<Integer>>>();
@@ -741,7 +741,7 @@ public class SequiturModel extends Observable {
 		} else {
 
 			consoleLogger.info("setting up GI with params: ");
-			sb.append(" algorithm: Sequitur");
+			
 			sb.append(" Motif Filter Threshold: ").append(mfthreshold);
 
 			sb.append(" Grid size: ").append(alphabetSize);
@@ -790,7 +790,7 @@ public class SequiturModel extends Observable {
 		System.out.println("running time: " + runTime);
 		ArrayList<Integer> frequency = new ArrayList<Integer>();
 
-		notifyObservers(new SequiturMessage(SequiturMessage.CHART_MESSAGE, this.chartData, ruleIntervals, ruleMapLength));
+		notifyObservers(new InductionMessage(InductionMessage.CHART_MESSAGE, this.chartData, ruleIntervals, ruleMapLength));
 
 	}
 
@@ -918,7 +918,7 @@ public class SequiturModel extends Observable {
 
 					if (latSpan > 1 || lonSpan > 1) {
 					
-						int skip = Math.max(latSpan,lonSpan);
+						int skip = 4;
 						double latstep = (latOri.get(i) - latOri.get(i - 1)) / skip;
 						double lonstep = (lonOri.get(i) - lonOri.get(i - 1)) / skip;
 						for (int j = 0; j < skip; j++) {
@@ -1060,7 +1060,7 @@ public class SequiturModel extends Observable {
 	 */
 	private void log(String message) {
 		this.setChanged();
-		notifyObservers(new SequiturMessage(SequiturMessage.STATUS_MESSAGE, "model: " + message));
+		notifyObservers(new InductionMessage(InductionMessage.STATUS_MESSAGE, "model: " + message));
 	}
 
 	/**
