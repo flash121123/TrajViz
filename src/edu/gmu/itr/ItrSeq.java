@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import edu.gmu.base.GIHelper;
-import edu.gmu.base.Interval;
-import edu.gmu.base.IntervalST;
+import edu.gmu.base.IntervalG;
+import edu.gmu.base.IntervalSTG;
+import intervaltree.Interval;
 import edu.gmu.core.Word;
 import edu.gmu.core.agi.AGrammarRuleRecord;
 import edu.gmu.core.agi.AGrammarRules;
@@ -89,7 +91,7 @@ public class ItrSeq {
 	public ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> toDisplay()
 	{
 		ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>> r=new ArrayList<ArrayList<gmu.edu.core.gi.RuleInterval>>();
-		IntervalST<String> st=new IntervalST<String>();
+		IntervalSTG<String> st=new IntervalSTG<String>();
 		String[] tsStr = strtoken;
 		ArrayList<Integer> saxWordsIndexes = new ArrayList<Integer>(sd_global.getAllIndices());
 		Set<String> ss=new HashSet<String>();
@@ -173,7 +175,7 @@ public class ItrSeq {
 				{
 					
 					RuleInterval y = yyx.get(i);
-					Interval yy=new Interval(y);
+					IntervalG yy=new IntervalG(y);
 					 
 					if(st.search(yy)==null)
 					{

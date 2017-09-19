@@ -2,13 +2,14 @@ package edu.gmu.core;
 
 import java.io.FileWriter;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import edu.gmu.base.Interval;
+import intervaltree.Interval;
 import edu.gmu.sax.SAXRecords;
 import gmu.edu.core.gi.GrammarRuleRecord;
 import gmu.edu.core.gi.GrammarRules;
