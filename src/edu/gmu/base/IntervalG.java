@@ -1,12 +1,11 @@
 package edu.gmu.base;
 
 import edu.gmu.core.agi.RuleInterval;
+
 import intervaltree.Interval;
 
 public class IntervalG extends Interval {
-	private Integer startPos=-1;
-	private Integer endPos=-1;
-	private Integer lens=0;
+
 	
 	public IntervalG()
 	{
@@ -15,25 +14,25 @@ public class IntervalG extends Interval {
 
 	public IntervalG(Integer s,Integer e)
 	{
-		startPos=s;
-		endPos=e;
+		this.set_start(s);
+		this.set_end(e);
 	}
 	
 	public IntervalG(Double s, Double e) {
 		// TODO Auto-generated constructor stub
-		startPos=s.intValue();
-		endPos=e.intValue();
+		this.set_start(s.intValue());
+		this.set_end(e.intValue());
 	}
 
 	public IntervalG(RuleInterval y) {
 		// TODO Auto-generated constructor stub
-		this.startPos=y.getStart();
-  	this.endPos=y.getEnd();
+		this.set_start(y.getStart());
+		this.set_end(y.getEnd());
 	}
 
 	@Override
 	public String toString() {
-		return "[" + startPos + ", " + endPos + "]";
+		return "[" + this.get_start() + ", " + this.get_end() + "]";
 	}
 
 }
